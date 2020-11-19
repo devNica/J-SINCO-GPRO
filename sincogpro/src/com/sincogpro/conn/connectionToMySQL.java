@@ -5,6 +5,7 @@
  */
 package com.sincogpro.conn;
 
+import com.sincogpro.credentials.Credentials;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,12 +16,13 @@ import javax.swing.JOptionPane;
  * @author Alejandro Gonzalez
  */
 public class connectionToMySQL {
+    
     public static Connection conn = null;
-    private final String PORT = "3306";
-    private final String PASSWORD = "windows";
-    private final String USERNAME = "root";
-    private final String DATABASE = "//localhost:"+PORT+"/sincogpro";;
-    private final String URL = "jdbc:mysql:"+DATABASE;
+    private final String PORT = Credentials.PORT;
+    private final String PASSWORD = Credentials.PASSWORD;
+    private final String USERNAME = Credentials.USERNAME;
+    private final String DATABASE = Credentials.DATABASE;
+    private final String URL = Credentials.URL;
     
     public  void openConnectionToMySQL(String obj)
     {        
