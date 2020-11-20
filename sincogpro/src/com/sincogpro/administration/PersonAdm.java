@@ -17,6 +17,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
 
 /**
  *
@@ -25,8 +26,9 @@ import javax.swing.SwingConstants;
 public class PersonAdm extends javax.swing.JFrame{
 
     Person person = new Person();
-    
+    String idperson;
     ArrayList<ErrorHandler> errors = new ArrayList<>();
+    
     private String filter;
     Pattern pattern = Pattern
                 .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -40,6 +42,8 @@ public class PersonAdm extends javax.swing.JFrame{
         fetchPersons(1);
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer) optionList.getCellRenderer(); 
         renderer.setHorizontalAlignment(JLabel.CENTER);
+        selectDataFromTable();
+        
     }
     
     
@@ -100,6 +104,19 @@ public class PersonAdm extends javax.swing.JFrame{
         }
     }
     
+    private void selectDataFromTable(){
+        personDT.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            int ROW=personDT.getSelectedRow();
+            int COLUMN =0;
+            
+            if(ROW!=-1)
+            {
+                idperson = personDT.getValueAt(ROW, COLUMN).toString();
+            }
+        });
+    
+    }
+    
     private void initOptions(int opc){
         
         switch(opc){
@@ -109,12 +126,14 @@ public class PersonAdm extends javax.swing.JFrame{
               disableComboBox();
               saveBtn.setEnabled(false);
               cancelBtn.setEnabled(false);
+              
             break;
                 
             case 1:
                 enableTextField();
                 enableCheckBox();
                 enabledComboBox();
+                addBtn.setEnabled(false);
                 saveBtn.setEnabled(true);
                 cancelBtn.setEnabled(true);
             break;
@@ -124,6 +143,7 @@ public class PersonAdm extends javax.swing.JFrame{
                 disableTextField();
                 disableCheckBox();
                 disableComboBox();
+                addBtn.setEnabled(true);
                 saveBtn.setEnabled(false);
                 cancelBtn.setEnabled(false);
             break;
@@ -247,14 +267,16 @@ public class PersonAdm extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu = new javax.swing.JPopupMenu();
+        editItem = new javax.swing.JMenuItem();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        recordsPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         personDT = new javax.swing.JTable();
         titleLabel = new javax.swing.JLabel();
         searchLabel = new javax.swing.JLabel();
         searchText = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        registrationPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         dniLabel = new javax.swing.JLabel();
@@ -296,9 +318,20 @@ public class PersonAdm extends javax.swing.JFrame{
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
+        popupMenu.setToolTipText("Edit");
+
+        editItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/edit16.png"))); // NOI18N
+        editItem.setText("Edit");
+        editItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editItemActionPerformed(evt);
+            }
+        });
+        popupMenu.add(editItem);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        recordsPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         personDT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -311,6 +344,7 @@ public class PersonAdm extends javax.swing.JFrame{
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        personDT.setComponentPopupMenu(popupMenu);
         jScrollPane1.setViewportView(personDT);
 
         titleLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -338,28 +372,28 @@ public class PersonAdm extends javax.swing.JFrame{
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout recordsPanelLayout = new javax.swing.GroupLayout(recordsPanel);
+        recordsPanel.setLayout(recordsPanelLayout);
+        recordsPanelLayout.setHorizontalGroup(
+            recordsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recordsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(recordsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, recordsPanelLayout.createSequentialGroup()
                         .addComponent(searchLabel)
                         .addGap(18, 18, 18)
                         .addComponent(searchText)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        recordsPanelLayout.setVerticalGroup(
+            recordsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(recordsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titleLabel)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(recordsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -367,9 +401,9 @@ public class PersonAdm extends javax.swing.JFrame{
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("RECORDS", jPanel1);
+        jTabbedPane1.addTab("RECORDS", recordsPanel);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        registrationPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PERSONAL DATA FORM RECORD");
@@ -494,25 +528,25 @@ public class PersonAdm extends javax.swing.JFrame{
         firstnameText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         firstnameText.setText("LUCAS ANDRES");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout registrationPanelLayout = new javax.swing.GroupLayout(registrationPanel);
+        registrationPanel.setLayout(registrationPanelLayout);
+        registrationPanelLayout.setHorizontalGroup(
+            registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(registrationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(registrationPanelLayout.createSequentialGroup()
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, registrationPanelLayout.createSequentialGroup()
+                                .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(registrationPanelLayout.createSequentialGroup()
+                                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(lastnameLabel)
                                             .addComponent(firstnameLabel))
                                         .addGap(17, 17, 17))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, registrationPanelLayout.createSequentialGroup()
+                                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(dniLabel, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(countryLabel, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(cityLabel, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -520,8 +554,8 @@ public class PersonAdm extends javax.swing.JFrame{
                                             .addComponent(emailLabel, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(phoneLabel, javax.swing.GroupLayout.Alignment.TRAILING))
                                         .addGap(18, 18, 18)))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, registrationPanelLayout.createSequentialGroup()
                                         .addComponent(phoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(birthdayLabel)
@@ -534,7 +568,7 @@ public class PersonAdm extends javax.swing.JFrame{
                                     .addComponent(cityText)
                                     .addComponent(jScrollPane4)
                                     .addComponent(firstnameText)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(registrationPanelLayout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addComponent(typeLabel)
                                 .addGap(18, 18, 18)
@@ -545,7 +579,7 @@ public class PersonAdm extends javax.swing.JFrame{
                                 .addComponent(genderLabel)
                                 .addGap(18, 18, 18)
                                 .addComponent(genderCmb, 0, 130, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(registrationPanelLayout.createSequentialGroup()
                                 .addComponent(addBtn)
                                 .addGap(18, 18, 18)
                                 .addComponent(cancelBtn)
@@ -557,56 +591,56 @@ public class PersonAdm extends javax.swing.JFrame{
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        registrationPanelLayout.setVerticalGroup(
+            registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(registrationPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(registrationPanelLayout.createSequentialGroup()
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(dniLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dniText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(firstnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(firstnameText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lastnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lastnameText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(countryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(countryText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cityText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cityLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(emailText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(phoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(phoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(birthdayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(birthdayText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(genderCmb, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(staffChk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(customerChk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(typeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(genderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cancelBtn)
                             .addComponent(saveBtn)
                             .addComponent(addBtn)))
@@ -615,7 +649,7 @@ public class PersonAdm extends javax.swing.JFrame{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("ADD REGISTER", jPanel2);
+        jTabbedPane1.addTab("ADD REGISTER", registrationPanel);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -753,7 +787,6 @@ public class PersonAdm extends javax.swing.JFrame{
             data.add(firstnameText.getText());
             data.add(lastnameText.getText());
             data.add(birthdayText.getText());
-            data.add(countryText.getText());
             readField = countryText.getText().isEmpty() ? "n/a" : countryText.getText();
             data.add(readField);
             readField = cityText.getText().isEmpty() ? "n/a" : cityText.getText();
@@ -769,7 +802,7 @@ public class PersonAdm extends javax.swing.JFrame{
             else data.add("0");
             data.add(String.valueOf(fk_gender));
 
-            //person.createPerson(data);
+            person.createPerson(data);
             resetInitForm();
         
         }
@@ -792,6 +825,14 @@ public class PersonAdm extends javax.swing.JFrame{
     private void searchTextMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchTextMousePressed
         searchText.setText("");
     }//GEN-LAST:event_searchTextMousePressed
+
+    private void editItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editItemActionPerformed
+        ArrayList<String> data = new ArrayList<>();
+        data = person.getPersonById(idperson);
+        for (int i = 0; i < data.size(); i++) {
+            System.out.println("datos recuperado:" + data.get(i));
+        }
+    }//GEN-LAST:event_editItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -849,6 +890,7 @@ public class PersonAdm extends javax.swing.JFrame{
     private javax.swing.JCheckBox customerChk;
     private javax.swing.JLabel dniLabel;
     private javax.swing.JFormattedTextField dniText;
+    private javax.swing.JMenuItem editItem;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField emailText;
     private javax.swing.JLabel firstnameLabel;
@@ -861,8 +903,6 @@ public class PersonAdm extends javax.swing.JFrame{
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -878,6 +918,9 @@ public class PersonAdm extends javax.swing.JFrame{
     private javax.swing.JTable personDT;
     private javax.swing.JLabel phoneLabel;
     private javax.swing.JFormattedTextField phoneText;
+    private javax.swing.JPopupMenu popupMenu;
+    private javax.swing.JPanel recordsPanel;
+    private javax.swing.JPanel registrationPanel;
     private javax.swing.JButton saveBtn;
     private javax.swing.JLabel searchLabel;
     private javax.swing.JTextField searchText;

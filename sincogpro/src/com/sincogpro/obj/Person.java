@@ -24,6 +24,54 @@ public class Person {
     ArrayList<String>cluster=new ArrayList<>(); 
     connectionToMySQL cnx = new connectionToMySQL();
     
+    
+    public ArrayList<String> getPersonById (String idperson){
+        ArrayList<String> person = new ArrayList<>();
+        cnx.openConnectionToMySQL("Person");
+        int NUMBER_COLUMNS = 12;
+        
+        sql = "SELECT  "
+                + "P.idperson, "
+                + "P.dni, "
+                + "P.firstname, "
+                + "P.lastname, "
+                + "P.birthday, "
+                + "P.country, "
+                + "P.city, "
+                + "P.address, "
+                + "P.phone, "
+                + "P.email, "
+                + "IF(P.is_customer = 1, IF(P.is_staff = 1, 'CUSTOMER/STAFF', 'CUSTOMER'), 'STAFF') AS type, "
+                + "G.gender "
+                + "FROM person as  P\n" 
+                + "INNER JOIN gender AS G ON G.idgender = P.fk_gender\n" 
+                + "HAVING P.idperson = "+idperson;
+        
+        System.out.println(sql);
+        
+        try
+        {
+            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            try (ResultSet res = pstm.executeQuery()) 
+            {                            
+                while(res.next())
+                {                                    
+                   for (int i = 0; i < NUMBER_COLUMNS; i++) 
+                        person.add(res.getString(i+1));                                                    
+                } 
+            }                        
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+                
+        cnx.closeConnectionToMySQL("Person");
+        
+        return person;
+        
+    }
+    
     public void createPerson (ArrayList<String> data){
         
         cnx.openConnectionToMySQL("Person");
@@ -36,6 +84,8 @@ public class Person {
                 + "'"+data.get(3)+"', '"+data.get(4)+"', '"+data.get(5)+"', '"+data.get(6)+"', "
                 + "'"+data.get(7)+"', '"+data.get(8)+"', '"+data.get(9)+"', '"+data.get(10)+"', "
                 + "'"+data.get(11)+"'); ";
+        
+        System.out.println(sql);
         
         try 
         {
