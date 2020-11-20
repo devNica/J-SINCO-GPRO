@@ -45,7 +45,7 @@ public class Person {
         } 
         catch (SQLException e)
         {
-            JOptionPane.showMessageDialog(null,"An error has ocurred", "Execute Error !!!",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"An error occurred while executing your query", "Execute Error !!!",JOptionPane.ERROR_MESSAGE);
         }
         
         cnx.closeConnectionToMySQL("Person");
