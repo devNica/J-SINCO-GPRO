@@ -6,22 +6,31 @@ Developed by Lucas Andres Marsell
  */
 package com.sincogpro.administration;
 
+import com.sincogpro.obj.ErrorHandler;
 import com.sincogpro.obj.Person;
 import com.sincogpro.utils.JTableHelper;
 import com.sincogpro.utils.RowsRenderer;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 /**
  *
  * @author Alejandro Gonzalez
  */
-public class PersonAdm extends javax.swing.JFrame {
+public class PersonAdm extends javax.swing.JFrame{
 
     Person person = new Person();
+    
+    ArrayList<ErrorHandler> errors = new ArrayList<>();
     private String filter;
+    Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     
     public PersonAdm() {
         initComponents();
@@ -196,6 +205,37 @@ public class PersonAdm extends javax.swing.JFrame {
        birthdayText.setText("1990-12-24");
     }
     
+    private void checkFields(){
+       
+        ArrayList<String> err = new ArrayList<>();
+        String checkEmailFormat;
+
+        if(dniText.getText().isEmpty() || dniText.getText().equals("   -      -     ")) err.add("The DNI field is Empty!");
+        if(firstnameText.getText().isEmpty() || firstnameText.getText().equals("")) err.add("The Firstname field is Empty!");
+        if(lastnameText.getText().isEmpty() || lastnameText.getText().equals("")) err.add("The Lastname field is Empty!");
+        
+        if(emailText.getText().isEmpty() || emailText.getText().equals(""))
+        {
+             err.add("The Email field is Empty!");
+        }
+        else
+        {
+             Matcher mather = pattern.matcher(emailText.getText());
+             checkEmailFormat = (mather.find() == true) ? "-" : "Wrong Email format!";
+             if(!checkEmailFormat.equals("-"))err.add(checkEmailFormat);
+        }
+        
+        if(!customerChk.isSelected() || !staffChk.isSelected()) err.add("The person's record type has not been specified");
+
+        errors.clear();
+       
+        for (int i = 0; i < err.size(); i++) {
+            ErrorHandler error = new ErrorHandler();
+            error.setFormErrors(err.get(i));
+            errors.add(error);
+        }
+    }
+    
     
 
     /**
@@ -231,7 +271,7 @@ public class PersonAdm extends javax.swing.JFrame {
         saveBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        logText = new javax.swing.JTextArea();
         cancelBtn = new javax.swing.JButton();
         dniText = new javax.swing.JFormattedTextField();
         phoneText = new javax.swing.JFormattedTextField();
@@ -383,9 +423,9 @@ public class PersonAdm extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        logText.setColumns(20);
+        logText.setRows(5);
+        jScrollPane3.setViewportView(logText);
 
         cancelBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/cancel32.png"))); // NOI18N
         cancelBtn.setText("CANCEL");
@@ -506,7 +546,6 @@ public class PersonAdm extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(genderCmb, 0, 130, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(addBtn)
                                 .addGap(18, 18, 18)
                                 .addComponent(cancelBtn)
@@ -700,28 +739,49 @@ public class PersonAdm extends javax.swing.JFrame {
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         ArrayList<String> data =  new ArrayList<>();
+        String log="";
+        String readField;
+        
+        
         int fk_gender = person.getGenderIndexByDesc(genderCmb.getSelectedItem().toString());
         
-        data.add(dniText.getText());
-        data.add(firstnameText.getText());
-        data.add(lastnameText.getText());
-        data.add(birthdayText.getText());
-        data.add(countryText.getText());
-        data.add(cityText.getText());
-        data.add(addressText.getText());
-        data.add(phoneText.getText());
-        data.add(emailText.getText());
-        if(customerChk.isSelected()) data.add("1");
-        else data.add("0");
-        if(staffChk.isSelected())data.add("1");
-        else data.add("0");
-        data.add(String.valueOf(fk_gender));
+        checkFields();
         
-        person.createPerson(data);
-//        for (int i = 0; i < data.size(); i++) {
-//            System.out.println(data.get(i));
-//        }
-        resetInitForm();
+        if(errors.size() < 1){
+            
+            data.add(dniText.getText());
+            data.add(firstnameText.getText());
+            data.add(lastnameText.getText());
+            data.add(birthdayText.getText());
+            data.add(countryText.getText());
+            readField = countryText.getText().isEmpty() ? "n/a" : countryText.getText();
+            data.add(readField);
+            readField = cityText.getText().isEmpty() ? "n/a" : cityText.getText();
+            data.add(readField);
+            readField = addressText.getText().isEmpty() ? "n/a" : addressText.getText();
+            data.add(readField);
+            readField = phoneText.getText().isEmpty() ? "n/a" : phoneText.getText();
+            data.add(readField);
+            data.add(emailText.getText());
+            if(customerChk.isSelected()) data.add("1");
+            else data.add("0");
+            if(staffChk.isSelected())data.add("1");
+            else data.add("0");
+            data.add(String.valueOf(fk_gender));
+
+            //person.createPerson(data);
+            resetInitForm();
+        
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Some required fields in the form are empty!", "Error notice",JOptionPane.ERROR_MESSAGE);
+            
+            for (int i = 0; i < errors.size(); i++) {
+                log = log + errors.get(i).getFormErrors()+"\n";
+            }
+            
+            logText.setText(log);
+        }
         
     }//GEN-LAST:event_saveBtnActionPerformed
 
@@ -811,9 +871,9 @@ public class PersonAdm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lastnameLabel;
     private javax.swing.JTextField lastnameText;
+    private javax.swing.JTextArea logText;
     private javax.swing.JList<String> optionList;
     private javax.swing.JTable personDT;
     private javax.swing.JLabel phoneLabel;
