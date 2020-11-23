@@ -42,6 +42,7 @@ public class Person {
                 + "P.phone, "
                 + "P.email, "
                 + "IF(P.is_customer = 1, IF(P.is_staff = 1, 'CUSTOMER/STAFF', 'CUSTOMER'), 'STAFF') AS type, "
+                + "G.idgender, "
                 + "G.gender "
                 + "FROM person as  P\n" 
                 + "INNER JOIN gender AS G ON G.idgender = P.fk_gender\n" 
@@ -98,6 +99,40 @@ public class Person {
             JOptionPane.showMessageDialog(null,"An error occurred while executing your query", "Execute Error !!!",JOptionPane.ERROR_MESSAGE);
         }
         
+        cnx.closeConnectionToMySQL("Person");
+    }
+    
+    public void updatePerson(ArrayList<String> data, String idperson){
+       sql="UPDATE `person` "
+               + "SET `dni` = '"+data.get(0)+"',"
+               + "`firstname` = '"+data.get(1)+"',"
+               + "`lastname` = '"+data.get(2)+"',"
+               + "`birthday` = '"+data.get(3)+"',"
+               + "`country` = '"+data.get(4)+"',"
+               + "`city` = '"+data.get(5)+"',"
+               + "`address` = '"+data.get(6)+"',"
+               + "`phone` = '"+data.get(7)+"',"
+               + "`email` = '"+data.get(8)+"',"
+               + "`is_customer` = '"+data.get(9)+"',"
+               + "`is_staff` = '"+data.get(10)+"',"
+               + "`fk_gender` = '"+data.get(11)+"'"
+               + " WHERE `person`.`idperson` = "+idperson;
+       
+       cnx.openConnectionToMySQL("Person");
+       
+       System.out.println(sql);
+        
+        try 
+        {
+          PreparedStatement pstm=(PreparedStatement)connectionToMySQL.conn.prepareStatement(sql);
+          pstm.executeUpdate();
+          JOptionPane.showMessageDialog(null, "Person has been updated sucessfull","System Information",JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (SQLException e)
+        {
+            JOptionPane.showMessageDialog(null,"An error occurred while executing your query", "Execute Error !!!",JOptionPane.ERROR_MESSAGE);
+        }
+       
         cnx.closeConnectionToMySQL("Person");
     }
     
