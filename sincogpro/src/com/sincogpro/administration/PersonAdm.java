@@ -26,8 +26,9 @@ import javax.swing.event.ListSelectionEvent;
 public class PersonAdm extends javax.swing.JFrame{
 
     Person person = new Person();
-    String idperson;
+    String idperson, typeQuery;
     ArrayList<ErrorHandler> errors = new ArrayList<>();
+   
     
     private String filter;
     Pattern pattern = Pattern
@@ -118,43 +119,97 @@ public class PersonAdm extends javax.swing.JFrame{
     }
     
     private void initOptions(int opc){
-        
+        /*OPCIONES DE EJECUCION*/
         switch(opc){
+            /*
+            CUANDO ENTRA POR PRIMERA VEZ AL PROGRAMA
+            DESHABILITA LOS ELEMENTOS DEL FORMULARIO
+            Y SOLO HABILITA EL BOTON PARA AGREGAR UN 
+            NUEVO REGISTRO
+            */
             case 0:
               disableTextField();
               disableCheckBox();
               disableComboBox();
+              addBtn.setEnabled(true);
+              editBtn.setEnabled(false);
               saveBtn.setEnabled(false);
               cancelBtn.setEnabled(false);
               
+              
             break;
-                
+            
+            /*
+            ESTA  OPCION SE HABILITA CUANDOSE HA HECHO
+            CLIC EN EL BOTON DE AGREGAR UN NUEVO REGISTRO
+            HABILITANDO LOS CAMPOS DEL FORMULARIO
+            */
             case 1:
                 enableTextField();
                 enableCheckBox();
                 enabledComboBox();
                 addBtn.setEnabled(false);
+                editBtn.setEnabled(false);
                 saveBtn.setEnabled(true);
                 cancelBtn.setEnabled(true);
             break;
             
+            
+            /*
+            ESTA OPCION SE EJECUTA CUANDO SE HA CANCELADO CUALQUIERA
+            ACCION TANTO DE CREACION COMO DE EDICION.
+            */
             case 2:
                 resetInitForm();
                 disableTextField();
                 disableCheckBox();
                 disableComboBox();
                 addBtn.setEnabled(true);
+                editBtn.setEnabled(false);
                 saveBtn.setEnabled(false);
                 cancelBtn.setEnabled(false);
             break;
+            
+            
+            /*
+            ESTA OPCION SE EJECUTA CUANDO SE HACE CLIC
+            A LA OPCION DE EDICION EN EL DATA TABLE
+            EN ESTA OPCION SOLO SE HABILITA EL 
+            BOTON DE EDICION, MIENTRAS EL FORMULARIO
+            CARGA LOS DATOS DE LA FILA SELECCIONADA
+            MANTENIENDO LOS CAMPOS EN MODO NO EDITABLES
+            */
+            case 3:
+                addBtn.setEnabled(false);
+                editBtn.setEnabled(true);
+                saveBtn.setEnabled(false);
+                cancelBtn.setEnabled(true);
+                disableTextField();
+                disableCheckBox();
+                disableComboBox();
+            break;
+            
+            /*
+            ESTA OPCION SE EJECUTA CUANDO SE HACE CLIC EN EL BOTON
+            EDITAR, CON LO CUAL SE HABILITAN LOS CAMPOS PARA
+            SU POSTERIOR EDICION DE LOS DATOS
+            */
+            case 4:
+                enableTextField();
+                enableCheckBox();
+                enabledComboBox();
+                addBtn.setEnabled(false);
+                editBtn.setEnabled(false);
+                saveBtn.setEnabled(true);
+                cancelBtn.setEnabled(true);
+             break;
+                
         }
         
     }
     
     private void disableTextField(){
         dniText.setEditable(false);
-        //dniText.setBackground(Color.BLACK);
-        //dniText.setForeground(new Color(102, 204, 255));
         firstnameText.setEditable(false);
         lastnameText.setEditable(false);
         countryText.setEditable(false);
@@ -245,7 +300,7 @@ public class PersonAdm extends javax.swing.JFrame{
              if(!checkEmailFormat.equals("-"))err.add(checkEmailFormat);
         }
         
-        if(!customerChk.isSelected() || !staffChk.isSelected()) err.add("The person's record type has not been specified");
+        if(!customerChk.isSelected() && !staffChk.isSelected()) err.add("The person's record type has not been specified");
 
         errors.clear();
        
@@ -308,6 +363,7 @@ public class PersonAdm extends javax.swing.JFrame{
         emailLabel = new javax.swing.JLabel();
         emailText = new javax.swing.JTextField();
         firstnameText = new javax.swing.JTextField();
+        editBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         optionList = new javax.swing.JList<>();
@@ -406,7 +462,7 @@ public class PersonAdm extends javax.swing.JFrame{
         registrationPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("PERSONAL DATA FORM RECORD");
+        jLabel1.setText("PERSONAL INFORMATION REGISTRATION FORM");
 
         jSeparator1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -528,6 +584,14 @@ public class PersonAdm extends javax.swing.JFrame{
         firstnameText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         firstnameText.setText("LUCAS ANDRES");
 
+        editBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/edit32.png"))); // NOI18N
+        editBtn.setText("EDIT");
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout registrationPanelLayout = new javax.swing.GroupLayout(registrationPanel);
         registrationPanel.setLayout(registrationPanelLayout);
         registrationPanelLayout.setHorizontalGroup(
@@ -568,26 +632,31 @@ public class PersonAdm extends javax.swing.JFrame{
                                     .addComponent(cityText)
                                     .addComponent(jScrollPane4)
                                     .addComponent(firstnameText)))
-                            .addGroup(registrationPanelLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, registrationPanelLayout.createSequentialGroup()
                                 .addGap(30, 30, 30)
-                                .addComponent(typeLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(staffChk)
-                                .addGap(18, 18, 18)
-                                .addComponent(customerChk, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(genderLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(genderCmb, 0, 130, Short.MAX_VALUE))
-                            .addGroup(registrationPanelLayout.createSequentialGroup()
-                                .addComponent(addBtn)
-                                .addGap(18, 18, 18)
-                                .addComponent(cancelBtn)
-                                .addGap(18, 18, 18)
-                                .addComponent(saveBtn)))
+                                .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(registrationPanelLayout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(addBtn)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(editBtn)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cancelBtn)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(saveBtn))
+                                    .addGroup(registrationPanelLayout.createSequentialGroup()
+                                        .addComponent(typeLabel)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(staffChk)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(customerChk, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(genderLabel)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(genderCmb, 0, 138, Short.MAX_VALUE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -643,13 +712,14 @@ public class PersonAdm extends javax.swing.JFrame{
                         .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cancelBtn)
                             .addComponent(saveBtn)
-                            .addComponent(addBtn)))
+                            .addComponent(addBtn)
+                            .addComponent(editBtn)))
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("ADD REGISTER", registrationPanel);
+        jTabbedPane1.addTab("RECORD FORM", registrationPanel);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -753,6 +823,7 @@ public class PersonAdm extends javax.swing.JFrame{
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         initOptions(1);
         clearForm();
+        typeQuery="INSERT";
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
@@ -775,8 +846,6 @@ public class PersonAdm extends javax.swing.JFrame{
         ArrayList<String> data =  new ArrayList<>();
         String log="";
         String readField;
-        
-        
         int fk_gender = person.getGenderIndexByDesc(genderCmb.getSelectedItem().toString());
         
         checkFields();
@@ -796,13 +865,25 @@ public class PersonAdm extends javax.swing.JFrame{
             readField = phoneText.getText().isEmpty() ? "n/a" : phoneText.getText();
             data.add(readField);
             data.add(emailText.getText());
-            if(customerChk.isSelected()) data.add("1");
-            else data.add("0");
-            if(staffChk.isSelected())data.add("1");
-            else data.add("0");
+            
+            if(customerChk.isSelected() && staffChk.isSelected()){
+                data.add("1");
+                data.add("1");
+            }
+            if(!customerChk.isSelected() && staffChk.isSelected()){
+                data.add("0");
+                data.add("1");
+            }
+            if(customerChk.isSelected() && !staffChk.isSelected()){
+                data.add("1");
+                data.add("0");
+            }
+            
             data.add(String.valueOf(fk_gender));
-
-            person.createPerson(data);
+            
+            if(typeQuery.equals("INSERT")) person.createPerson(data);
+            else person.updatePerson(data, idperson);
+            
             resetInitForm();
         
         }
@@ -829,10 +910,41 @@ public class PersonAdm extends javax.swing.JFrame{
     private void editItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editItemActionPerformed
         ArrayList<String> data = new ArrayList<>();
         data = person.getPersonById(idperson);
-        for (int i = 0; i < data.size(); i++) {
-            System.out.println("datos recuperado:" + data.get(i));
+        
+        initOptions(3);
+        
+        dniText.setText(data.get(1));
+        firstnameText.setText(data.get(2));
+        lastnameText.setText(data.get(3));
+        birthdayText.setText(data.get(4));
+        countryText.setText(data.get(5));
+        cityText.setText(data.get(6));
+        addressText.setText(data.get(7));
+        phoneText.setText(data.get(8));
+        emailText.setText(data.get(9));
+        if(data.get(10).equals("CUSTOMER/STAFF")) {
+            staffChk.setSelected(true);
+            customerChk.setSelected(true);
+        } 
+        if(data.get(10).equals("STAFF")) {
+            staffChk.setSelected(true);
+            customerChk.setSelected(false);
+        } 
+        if(data.get(10).equals("CUSTOMER")) {
+            staffChk.setSelected(false);
+            customerChk.setSelected(true);
         }
+        genderCmb.setSelectedIndex(Integer.parseInt(data.get(11))-1);
+                
+        
+        
+        
     }//GEN-LAST:event_editItemActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        typeQuery="UPDATE";
+        initOptions(4);
+    }//GEN-LAST:event_editBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -890,6 +1002,7 @@ public class PersonAdm extends javax.swing.JFrame{
     private javax.swing.JCheckBox customerChk;
     private javax.swing.JLabel dniLabel;
     private javax.swing.JFormattedTextField dniText;
+    private javax.swing.JButton editBtn;
     private javax.swing.JMenuItem editItem;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField emailText;
