@@ -8,8 +8,11 @@ package com.sincogpro.administration;
 
 import com.sincogpro.obj.ErrorHandler;
 import com.sincogpro.obj.Person;
+import com.sincogpro.obj.Position;
 import com.sincogpro.utils.JTableHelper;
 import com.sincogpro.utils.RowsRenderer;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -26,6 +30,7 @@ import javax.swing.event.ListSelectionEvent;
 public class PersonAdm extends javax.swing.JFrame{
 
     Person person = new Person();
+    Position position = new  Position();
     String idperson, typeQuery;
     ArrayList<ErrorHandler> errors = new ArrayList<>();
    
@@ -38,15 +43,51 @@ public class PersonAdm extends javax.swing.JFrame{
     public PersonAdm() {
         initComponents();
         person.getGenderList();
+        person.getTyPersonList();
         loadGenderList();
+        loadTyPersonList();
         initOptions(0);
         fetchPersons(1);
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer) optionList.getCellRenderer(); 
         renderer.setHorizontalAlignment(JLabel.CENTER);
         selectDataFromTable();
-        
+        listPosition();
     }
     
+    
+    private void listPosition(){
+        positionSearchCmb.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+        
+            @Override
+            public void keyReleased(KeyEvent evt){
+            
+                String filter = positionSearchCmb.getEditor().getItem().toString();
+                if(evt.getKeyCode()>=65 && evt.getKeyCode() <=90 || evt.getKeyCode() >= 96 && evt.getKeyCode()<= 105 || evt.getKeyCode() == 8){
+                    positionSearchCmb.setModel(position.getPositionList(filter));
+                    if(positionSearchCmb.getItemCount()>0){
+                        positionSearchCmb.showPopup();
+                        if(evt.getKeyCode()!=8){
+                            ((JTextComponent)positionSearchCmb.getEditor().getEditorComponent()).select(filter.length(), positionSearchCmb.getEditor().getItem().toString().length());
+                        }else{
+                            positionSearchCmb.getEditor().setItem(filter);
+                        }
+                    }else{
+                        positionSearchCmb.getEditor().setItem(filter);
+                    }
+                }
+            }
+        
+        });
+    
+    }
+    
+    private void searchPosition(String filter){
+        String datos [] = position.searchPosition(filter);
+        if(datos[0]!=null){
+            
+        }
+        
+    }
     
     private void fetchPersons(int opc)
     {
@@ -70,7 +111,7 @@ public class PersonAdm extends javax.swing.JFrame{
         if(opc == 1) filter = "1";
         else{
             String keyType= "'%"+searchText.getText()+"%'";
-            filter = "P.firstname like "+keyType+" OR P.lastname like "+keyType+"OR type like "+keyType;
+            filter = "P.nombre like "+keyType+" OR P.apellido like "+keyType+"OR relacion like "+keyType;
         }
        
         /*
@@ -102,6 +143,13 @@ public class PersonAdm extends javax.swing.JFrame{
         for (int i = 0; i < person.getGenderIndex(); i++) {
             person.setIndexGenderList(i);
             genderCmb.addItem(person.getGenderListItem());
+        }
+    }
+    
+    private void loadTyPersonList(){
+        for (int i = 0; i < person.getTyPersonIndex(); i++) {
+            person.setIndexTyPersonList(i);
+            tyPersonCmb.addItem(person.getTyPersonListItem());
         }
     }
     
@@ -217,7 +265,7 @@ public class PersonAdm extends javax.swing.JFrame{
         addressText.setEditable(false);
         phoneText.setEditable(false);
         emailText.setEditable(false);
-        birthdayText.setEditable(false);
+        ///TYPE//
     }
     
     private void enableTextField(){
@@ -231,7 +279,7 @@ public class PersonAdm extends javax.swing.JFrame{
         addressText.setEditable(true);
         phoneText.setEditable(true);
         emailText.setEditable(true);
-        birthdayText.setEditable(true);
+        //RELATION//
     }
     
     private void disableCheckBox(){
@@ -248,12 +296,16 @@ public class PersonAdm extends javax.swing.JFrame{
     }
     
     private void disableComboBox(){
-        genderCmb.setSelectedIndex(1);
+        genderCmb.setSelectedIndex(0);
         genderCmb.setEnabled(false);
+        tyPersonCmb.setSelectedIndex(0);
+        tyPersonCmb.setEnabled(false);
+        
     }
     
     private void enabledComboBox(){
         genderCmb.setEnabled(true);
+        tyPersonCmb.setEnabled(true);
     }
     
     private void clearForm(){
@@ -264,20 +316,19 @@ public class PersonAdm extends javax.swing.JFrame{
         countryText.setText("");
         cityText.setText("");
         emailText.setText("");
-        birthdayText.setText("");
+        //RELATION//
     }
     
     private void resetInitForm(){
-        firstnameText.setText("LUCAS ANDRES");
-        lastnameText.setText("MARSELL");
+        firstnameText.setText("NOMBRES DE LA PERSONA");
+        lastnameText.setText("APELLIDOS");
         phoneText.setText("");
-       addressText.setText("ALTAMIRA DE ESTE, SEMAFOROS AUTOLOTE EL CHELE\n" +
-"1C AL SUR, 20VRS AL OESTE, 200MTS AL SUR. \n" +
-"CASA #E235");
-       countryText.setText("NICARAGUA");
-       cityText.setText("MANAGUA");
-       emailText.setText("test@querybirdcode.com");
-       birthdayText.setText("1990-12-24");
+        addressText.setText("DIRECCION FISICA O PERSONAL");
+        countryText.setText("PAIS DE ORIGEN");
+        cityText.setText("CIUDAD DE ORIGEN");
+        emailText.setText("CORREO PERSONAL O DE LA INSTITUCION");
+        //////TIPO///
+        logText.setText("");
     }
     
     private void checkFields(){
@@ -285,22 +336,22 @@ public class PersonAdm extends javax.swing.JFrame{
         ArrayList<String> err = new ArrayList<>();
         String checkEmailFormat;
 
-        if(dniText.getText().isEmpty() || dniText.getText().equals("   -      -     ")) err.add("The DNI field is Empty!");
-        if(firstnameText.getText().isEmpty() || firstnameText.getText().equals("")) err.add("The Firstname field is Empty!");
-        if(lastnameText.getText().isEmpty() || lastnameText.getText().equals("")) err.add("The Lastname field is Empty!");
+        if(dniText.getText().isEmpty() || dniText.getText().equals("   -      -     ")) err.add("¡El Campo Cedula Esta vacio!");
+        if(firstnameText.getText().isEmpty() || firstnameText.getText().equals("")) err.add("¡El Campo Nombre Esta Vacio!");
+        if(lastnameText.getText().isEmpty() || lastnameText.getText().equals("")) err.add("¡El Campo Apellido Esta vacio!");
         
         if(emailText.getText().isEmpty() || emailText.getText().equals(""))
         {
-             err.add("The Email field is Empty!");
+             err.add("¡El Campo Correo Esta vacio!");
         }
         else
         {
              Matcher mather = pattern.matcher(emailText.getText());
-             checkEmailFormat = (mather.find() == true) ? "-" : "Wrong Email format!";
+             checkEmailFormat = (mather.find() == true) ? "-" : "¡Formato de Correo Incorrecto!";
              if(!checkEmailFormat.equals("-"))err.add(checkEmailFormat);
         }
         
-        if(!customerChk.isSelected() && !staffChk.isSelected()) err.add("The person's record type has not been specified");
+        if(!customerChk.isSelected() && !staffChk.isSelected()) err.add("¿Es Cliente o Empleado?");
 
         errors.clear();
        
@@ -322,9 +373,11 @@ public class PersonAdm extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        popupMenu = new javax.swing.JPopupMenu();
+        DT_POPUP_OPT = new javax.swing.JPopupMenu();
+        jMenu4 = new javax.swing.JMenu();
         editItem = new javax.swing.JMenuItem();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        personToEmployeeItem = new javax.swing.JMenuItem();
+        optionsPanel = new javax.swing.JTabbedPane();
         recordsPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         personDT = new javax.swing.JTable();
@@ -344,7 +397,7 @@ public class PersonAdm extends javax.swing.JFrame{
         genderCmb = new javax.swing.JComboBox<>();
         staffChk = new javax.swing.JCheckBox();
         customerChk = new javax.swing.JCheckBox();
-        typeLabel = new javax.swing.JLabel();
+        relationShipLabel = new javax.swing.JLabel();
         saveBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -359,11 +412,14 @@ public class PersonAdm extends javax.swing.JFrame{
         cityLabel1 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         addressText = new javax.swing.JTextArea();
-        birthdayText = new javax.swing.JFormattedTextField();
         emailLabel = new javax.swing.JLabel();
         emailText = new javax.swing.JTextField();
         firstnameText = new javax.swing.JTextField();
         editBtn = new javax.swing.JButton();
+        tyPersonCmb = new javax.swing.JComboBox<>();
+        personToEmployeePanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        positionSearchCmb = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         optionList = new javax.swing.JList<>();
@@ -374,16 +430,29 @@ public class PersonAdm extends javax.swing.JFrame{
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
-        popupMenu.setToolTipText("Edit");
+        DT_POPUP_OPT.setToolTipText("Edit");
+
+        jMenu4.setText("options");
 
         editItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/edit16.png"))); // NOI18N
-        editItem.setText("Edit");
+        editItem.setText("Editar Info");
         editItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editItemActionPerformed(evt);
             }
         });
-        popupMenu.add(editItem);
+        jMenu4.add(editItem);
+
+        personToEmployeeItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/person_to_emp16.png"))); // NOI18N
+        personToEmployeeItem.setText("Promover");
+        personToEmployeeItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                personToEmployeeItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(personToEmployeeItem);
+
+        DT_POPUP_OPT.add(jMenu4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -400,18 +469,18 @@ public class PersonAdm extends javax.swing.JFrame{
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        personDT.setComponentPopupMenu(popupMenu);
+        personDT.setComponentPopupMenu(DT_POPUP_OPT);
         jScrollPane1.setViewportView(personDT);
 
         titleLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("DATATABLE REGISTERED PERSON");
+        titleLabel.setText("TABLA DE DATOS DE PERSONAS REGISTRADAS");
 
         searchLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/search16.png"))); // NOI18N
         searchLabel.setText("SEARCH:");
 
         searchText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        searchText.setText("WRITE  HERE IF YOU WANT TO SEARCH ONE OR MORE REGISTRATION");
+        searchText.setText("ESCRIBE AQUI, SI DESEAS REALIZAR UNA BUSQUEDA");
         searchText.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 searchTextMousePressed(evt);
@@ -436,7 +505,7 @@ public class PersonAdm extends javax.swing.JFrame{
                 .addContainerGap()
                 .addGroup(recordsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, recordsPanelLayout.createSequentialGroup()
                         .addComponent(searchLabel)
                         .addGap(18, 18, 18)
@@ -453,52 +522,57 @@ public class PersonAdm extends javax.swing.JFrame{
                     .addComponent(searchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("RECORDS", recordsPanel);
+        optionsPanel.addTab("REGISTROS", recordsPanel);
 
         registrationPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("PERSONAL INFORMATION REGISTRATION FORM");
+        jLabel1.setText("FORMULARIO PARA REGISTRO DE DATOS DE PERSONAS");
 
         jSeparator1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         dniLabel.setForeground(new java.awt.Color(255, 0, 0));
-        dniLabel.setText("DNI:");
+        dniLabel.setText("CEDULA:");
 
         firstnameLabel.setForeground(new java.awt.Color(255, 0, 0));
-        firstnameLabel.setText("FIRSTNAME:");
+        firstnameLabel.setText("NOMBRE:");
 
         lastnameLabel.setForeground(new java.awt.Color(255, 0, 0));
-        lastnameLabel.setText("LASTNAME:");
+        lastnameLabel.setText("APELLIDO:");
 
         lastnameText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lastnameText.setText("MARSELL");
+        lastnameText.setText("APELLIDOS");
         lastnameText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lastnameTextActionPerformed(evt);
             }
         });
 
-        phoneLabel.setText("PHONE:");
+        phoneLabel.setText("TELEFONO:");
 
-        birthdayLabel.setText("BIRTHDAY:");
+        birthdayLabel.setText("TIPO:");
 
         genderLabel.setForeground(new java.awt.Color(255, 0, 0));
-        genderLabel.setText("GENDER:");
+        genderLabel.setText("SEXO:");
 
-        staffChk.setText("IS STAFF");
+        staffChk.setText("ES EMPLEADO");
+        staffChk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                staffChkActionPerformed(evt);
+            }
+        });
 
-        customerChk.setText("IS CUSTOMER");
+        customerChk.setText("ES CLIENTE");
 
-        typeLabel.setForeground(new java.awt.Color(255, 0, 0));
-        typeLabel.setText("TYPE:");
+        relationShipLabel.setForeground(new java.awt.Color(255, 0, 0));
+        relationShipLabel.setText("RELACION:");
 
         saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/save32.png"))); // NOI18N
-        saveBtn.setText("SAVE");
+        saveBtn.setText("SALVAR");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveBtnActionPerformed(evt);
@@ -506,7 +580,7 @@ public class PersonAdm extends javax.swing.JFrame{
         });
 
         addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/add32.png"))); // NOI18N
-        addBtn.setText("ADD");
+        addBtn.setText("CREAR");
         addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addBtnActionPerformed(evt);
@@ -518,7 +592,7 @@ public class PersonAdm extends javax.swing.JFrame{
         jScrollPane3.setViewportView(logText);
 
         cancelBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/cancel32.png"))); // NOI18N
-        cancelBtn.setText("CANCEL");
+        cancelBtn.setText("CANCELAR");
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
@@ -539,42 +613,38 @@ public class PersonAdm extends javax.swing.JFrame{
         }
         phoneText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        countryLabel.setText("COUNTRY:");
+        countryLabel.setText("PAIS:");
 
         countryText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        countryText.setText("NICARAGUA");
+        countryText.setText("PAIS DE ORIGEN");
         countryText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 countryTextActionPerformed(evt);
             }
         });
 
-        cityLabel.setText("CITY:");
+        cityLabel.setText("CIUDAD:");
 
         cityText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        cityText.setText("MANAGUA");
+        cityText.setText("CIUDADE DE ORIGEN");
         cityText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cityTextActionPerformed(evt);
             }
         });
 
-        cityLabel1.setText("ADDRESS:");
+        cityLabel1.setText("DIRECCION:");
 
         addressText.setColumns(20);
         addressText.setRows(5);
-        addressText.setText("ALTAMIRA DE ESTE, SEMAFOROS AUTOLOTE EL CHELE\n1C AL SUR, 20VRS AL OESTE, 200MTS AL SUR. \nCASA #E235");
+        addressText.setText("DIRECCION FISICA O PERSONAL");
         jScrollPane4.setViewportView(addressText);
-
-        birthdayText.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
-        birthdayText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        birthdayText.setText("1990-12-24");
 
         emailLabel.setForeground(new java.awt.Color(255, 0, 0));
         emailLabel.setText("EMAIL:");
 
         emailText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        emailText.setText("test@querybirdcode.com");
+        emailText.setText("CORREO PERSONAL O DE LA INSTITUCION");
         emailText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailTextActionPerformed(evt);
@@ -582,10 +652,10 @@ public class PersonAdm extends javax.swing.JFrame{
         });
 
         firstnameText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        firstnameText.setText("LUCAS ANDRES");
+        firstnameText.setText("NOMBRES DE LA PERSONA");
 
         editBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/edit32.png"))); // NOI18N
-        editBtn.setText("EDIT");
+        editBtn.setText("EDITAR");
         editBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editBtnActionPerformed(evt);
@@ -603,28 +673,23 @@ public class PersonAdm extends javax.swing.JFrame{
                     .addGroup(registrationPanelLayout.createSequentialGroup()
                         .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, registrationPanelLayout.createSequentialGroup()
-                                .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(registrationPanelLayout.createSequentialGroup()
-                                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(lastnameLabel)
-                                            .addComponent(firstnameLabel))
-                                        .addGap(17, 17, 17))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, registrationPanelLayout.createSequentialGroup()
-                                        .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(dniLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(countryLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(cityLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(cityLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(emailLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(phoneLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addGap(18, 18, 18)))
+                                .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lastnameLabel)
+                                    .addComponent(dniLabel)
+                                    .addComponent(countryLabel)
+                                    .addComponent(cityLabel)
+                                    .addComponent(cityLabel1)
+                                    .addComponent(emailLabel)
+                                    .addComponent(phoneLabel)
+                                    .addComponent(firstnameLabel))
+                                .addGap(18, 18, 18)
                                 .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, registrationPanelLayout.createSequentialGroup()
                                         .addComponent(phoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(birthdayLabel)
                                         .addGap(18, 18, 18)
-                                        .addComponent(birthdayText))
+                                        .addComponent(tyPersonCmb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(emailText)
                                     .addComponent(countryText)
                                     .addComponent(lastnameText)
@@ -633,27 +698,25 @@ public class PersonAdm extends javax.swing.JFrame{
                                     .addComponent(jScrollPane4)
                                     .addComponent(firstnameText)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, registrationPanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(registrationPanelLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(addBtn)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(editBtn)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cancelBtn)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(saveBtn))
-                                    .addGroup(registrationPanelLayout.createSequentialGroup()
-                                        .addComponent(typeLabel)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(staffChk)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(customerChk, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(genderLabel)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(genderCmb, 0, 138, Short.MAX_VALUE)))))
+                                .addGap(0, 30, Short.MAX_VALUE)
+                                .addComponent(addBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(editBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(cancelBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(saveBtn))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, registrationPanelLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(relationShipLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(staffChk)
+                                .addGap(18, 18, 18)
+                                .addComponent(customerChk, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(genderLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(genderCmb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -700,13 +763,13 @@ public class PersonAdm extends javax.swing.JFrame{
                             .addComponent(phoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(phoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(birthdayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(birthdayText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tyPersonCmb, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(genderCmb, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(staffChk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(customerChk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(typeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(relationShipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(genderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -716,10 +779,42 @@ public class PersonAdm extends javax.swing.JFrame{
                             .addComponent(editBtn)))
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("RECORD FORM", registrationPanel);
+        optionsPanel.addTab("FICHA", registrationPanel);
+
+        personToEmployeePanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("PROMOTE REGISTRATION FROM PERSON TO EMPLOYEE");
+
+        positionSearchCmb.setEditable(true);
+
+        javax.swing.GroupLayout personToEmployeePanelLayout = new javax.swing.GroupLayout(personToEmployeePanel);
+        personToEmployeePanel.setLayout(personToEmployeePanelLayout);
+        personToEmployeePanelLayout.setHorizontalGroup(
+            personToEmployeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(personToEmployeePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(personToEmployeePanelLayout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addComponent(positionSearchCmb, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(248, Short.MAX_VALUE))
+        );
+        personToEmployeePanelLayout.setVerticalGroup(
+            personToEmployeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(personToEmployeePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(positionSearchCmb, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(428, Short.MAX_VALUE))
+        );
+
+        optionsPanel.addTab("PERSONA -> EMPLEADO", personToEmployeePanel);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -794,7 +889,7 @@ public class PersonAdm extends javax.swing.JFrame{
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTabbedPane1)))
+                        .addComponent(optionsPanel)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -803,7 +898,7 @@ public class PersonAdm extends javax.swing.JFrame{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1))
+                    .addComponent(optionsPanel))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -846,7 +941,10 @@ public class PersonAdm extends javax.swing.JFrame{
         ArrayList<String> data =  new ArrayList<>();
         String log="";
         String readField;
+        
         int fk_gender = person.getGenderIndexByDesc(genderCmb.getSelectedItem().toString());
+        int fk_tyPerson = person.getTyPersonIndexByDesc(tyPersonCmb.getSelectedItem().toString());
+        
         
         checkFields();
         
@@ -855,7 +953,7 @@ public class PersonAdm extends javax.swing.JFrame{
             data.add(dniText.getText());
             data.add(firstnameText.getText());
             data.add(lastnameText.getText());
-            data.add(birthdayText.getText());
+            data.add(String.valueOf(fk_tyPerson));
             readField = countryText.getText().isEmpty() ? "n/a" : countryText.getText();
             data.add(readField);
             readField = cityText.getText().isEmpty() ? "n/a" : cityText.getText();
@@ -888,7 +986,7 @@ public class PersonAdm extends javax.swing.JFrame{
         
         }
         else{
-            JOptionPane.showMessageDialog(null,"Some required fields in the form are empty!", "Error notice",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"¡Algunos campos requeridos del formulario estan vacios!", "Error",JOptionPane.ERROR_MESSAGE);
             
             for (int i = 0; i < errors.size(); i++) {
                 log = log + errors.get(i).getFormErrors()+"\n";
@@ -908,6 +1006,9 @@ public class PersonAdm extends javax.swing.JFrame{
     }//GEN-LAST:event_searchTextMousePressed
 
     private void editItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editItemActionPerformed
+        
+        optionsPanel.setSelectedIndex(1);
+        
         ArrayList<String> data = new ArrayList<>();
         data = person.getPersonById(idperson);
         
@@ -916,21 +1017,21 @@ public class PersonAdm extends javax.swing.JFrame{
         dniText.setText(data.get(1));
         firstnameText.setText(data.get(2));
         lastnameText.setText(data.get(3));
-        birthdayText.setText(data.get(4));
+        tyPersonCmb.setSelectedIndex(Integer.parseInt(data.get(4))-1);
         countryText.setText(data.get(5));
         cityText.setText(data.get(6));
         addressText.setText(data.get(7));
         phoneText.setText(data.get(8));
         emailText.setText(data.get(9));
-        if(data.get(10).equals("CUSTOMER/STAFF")) {
+        if(data.get(10).equals("CLIENTE/EMPLEADO")) {
             staffChk.setSelected(true);
             customerChk.setSelected(true);
         } 
-        if(data.get(10).equals("STAFF")) {
+        if(data.get(10).equals("EMPLEADO")) {
             staffChk.setSelected(true);
             customerChk.setSelected(false);
         } 
-        if(data.get(10).equals("CUSTOMER")) {
+        if(data.get(10).equals("CLIENTE")) {
             staffChk.setSelected(false);
             customerChk.setSelected(true);
         }
@@ -945,6 +1046,14 @@ public class PersonAdm extends javax.swing.JFrame{
         typeQuery="UPDATE";
         initOptions(4);
     }//GEN-LAST:event_editBtnActionPerformed
+
+    private void personToEmployeeItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personToEmployeeItemActionPerformed
+       optionsPanel.setSelectedIndex(2);
+    }//GEN-LAST:event_personToEmployeeItemActionPerformed
+
+    private void staffChkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_staffChkActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_staffChkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -989,10 +1098,10 @@ public class PersonAdm extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPopupMenu DT_POPUP_OPT;
     private javax.swing.JButton addBtn;
     private javax.swing.JTextArea addressText;
     private javax.swing.JLabel birthdayLabel;
-    private javax.swing.JFormattedTextField birthdayText;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JLabel cityLabel;
     private javax.swing.JLabel cityLabel1;
@@ -1011,10 +1120,12 @@ public class PersonAdm extends javax.swing.JFrame{
     private javax.swing.JComboBox<String> genderCmb;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1023,23 +1134,26 @@ public class PersonAdm extends javax.swing.JFrame{
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lastnameLabel;
     private javax.swing.JTextField lastnameText;
     private javax.swing.JTextArea logText;
     private javax.swing.JList<String> optionList;
+    private javax.swing.JTabbedPane optionsPanel;
     private javax.swing.JTable personDT;
+    private javax.swing.JMenuItem personToEmployeeItem;
+    private javax.swing.JPanel personToEmployeePanel;
     private javax.swing.JLabel phoneLabel;
     private javax.swing.JFormattedTextField phoneText;
-    private javax.swing.JPopupMenu popupMenu;
+    private javax.swing.JComboBox<String> positionSearchCmb;
     private javax.swing.JPanel recordsPanel;
     private javax.swing.JPanel registrationPanel;
+    private javax.swing.JLabel relationShipLabel;
     private javax.swing.JButton saveBtn;
     private javax.swing.JLabel searchLabel;
     private javax.swing.JTextField searchText;
     private javax.swing.JCheckBox staffChk;
     private javax.swing.JLabel titleLabel;
-    private javax.swing.JLabel typeLabel;
+    private javax.swing.JComboBox<String> tyPersonCmb;
     // End of variables declaration//GEN-END:variables
 
     

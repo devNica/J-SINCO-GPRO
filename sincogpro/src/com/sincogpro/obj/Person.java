@@ -18,8 +18,9 @@ import javax.swing.JOptionPane;
 public class Person {
     
     private int genderIndex;
+    private int tyPersonIndex;
     private int a; //SE UTILIZA PARA IR RECORRIENDO LOS ELEMENTOS DE LAS LISTAS;
-    private String [] genderList;
+    private String [] genderList, tyPersonList;
     private String sql;
     ArrayList<String>cluster=new ArrayList<>(); 
     connectionToMySQL cnx = new connectionToMySQL();
@@ -27,26 +28,28 @@ public class Person {
     
     public ArrayList<String> getPersonById (String idperson){
         ArrayList<String> person = new ArrayList<>();
-        cnx.openConnectionToMySQL("Person");
+        cnx.openConnectionToMySQL("OBJ-Person");
         int NUMBER_COLUMNS = 12;
         
         sql = "SELECT  "
-                + "P.idperson, "
-                + "P.dni, "
-                + "P.firstname, "
-                + "P.lastname, "
-                + "P.birthday, "
-                + "P.country, "
-                + "P.city, "
-                + "P.address, "
-                + "P.phone, "
-                + "P.email, "
-                + "IF(P.is_customer = 1, IF(P.is_staff = 1, 'CUSTOMER/STAFF', 'CUSTOMER'), 'STAFF') AS type, "
-                + "G.idgender, "
-                + "G.gender "
-                + "FROM person as  P\n" 
-                + "INNER JOIN gender AS G ON G.idgender = P.fk_gender\n" 
-                + "HAVING P.idperson = "+idperson;
+                + "P.idpersona, "
+                + "P.cedula, "
+                + "P.nombre, "
+                + "P.apellido, "
+                + "TP.idtipopersona, "
+                + "P.pais, "
+                + "P.ciudad, "
+                + "P.direccion, "
+                + "P.telefono, "
+                + "P.correo, "
+                + "IF(P.cliente = 1, IF(P.empleado = 1, 'CLIENTE/EMPLEADO', 'CLIENTE'), 'EMPLEADO') AS relacion, "
+                + "G.idsexo, "
+                + "G.sexo, "
+                + "TP.tipo "
+                + "FROM persona as  P\n" 
+                + "INNER JOIN sexo AS G ON G.idsexo = P.fk_sexo\n"
+                + "INNER JOIN tipopersona AS TP ON TP.idtipopersona = P.fk_tipopersona\n"
+                + "HAVING P.idpersona = "+idperson;
         
         System.out.println(sql);
         
@@ -67,7 +70,7 @@ public class Person {
             System.out.println(e);
         }
                 
-        cnx.closeConnectionToMySQL("Person");
+        cnx.closeConnectionToMySQL("OBJ-Person");
         
         return person;
         
@@ -75,12 +78,12 @@ public class Person {
     
     public void createPerson (ArrayList<String> data){
         
-        cnx.openConnectionToMySQL("Person");
+        cnx.openConnectionToMySQL("OBJ-Person");
         sql = "INSERT INTO "
-                + "`person` "
-                + "(`idperson`, `dni`, `firstname`, `lastname`, "
-                + "`birthday`, `country`, `city`, `address`, `phone`, "
-                + "`email`, `is_customer`, `is_staff`, `fk_gender`) "
+                + "`persona` "
+                + "(`idpersona`, `cedula`, `nombre`, `apellido`, "
+                + "`fk_tipopersona`, `pais`, `ciudad`, `direccion`, `telefono`, "
+                + "`correo`, `cliente`, `empleado`, `fk_sexo`) "
                 + "VALUES (NULL, '"+data.get(0)+"', '"+data.get(1)+"', '"+data.get(2)+"', "
                 + "'"+data.get(3)+"', '"+data.get(4)+"', '"+data.get(5)+"', '"+data.get(6)+"', "
                 + "'"+data.get(7)+"', '"+data.get(8)+"', '"+data.get(9)+"', '"+data.get(10)+"', "
@@ -92,33 +95,33 @@ public class Person {
         {
           PreparedStatement pstm=(PreparedStatement)connectionToMySQL.conn.prepareStatement(sql);
           pstm.executeUpdate();
-          JOptionPane.showMessageDialog(null, "Person has been created sucessfull","System Information",JOptionPane.INFORMATION_MESSAGE);
+          JOptionPane.showMessageDialog(null, "Los datos se han registrado satisfactoriamente","System Information",JOptionPane.INFORMATION_MESSAGE);
         } 
         catch (SQLException e)
         {
-            JOptionPane.showMessageDialog(null,"An error occurred while executing your query", "Execute Error !!!",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Ocurrio un Error al ejecutar la consulta", "¡Error de Ejecucion!",JOptionPane.ERROR_MESSAGE);
         }
         
-        cnx.closeConnectionToMySQL("Person");
+        cnx.closeConnectionToMySQL("OBJ-Person");
     }
     
     public void updatePerson(ArrayList<String> data, String idperson){
-       sql="UPDATE `person` "
-               + "SET `dni` = '"+data.get(0)+"',"
-               + "`firstname` = '"+data.get(1)+"',"
-               + "`lastname` = '"+data.get(2)+"',"
-               + "`birthday` = '"+data.get(3)+"',"
-               + "`country` = '"+data.get(4)+"',"
-               + "`city` = '"+data.get(5)+"',"
-               + "`address` = '"+data.get(6)+"',"
-               + "`phone` = '"+data.get(7)+"',"
-               + "`email` = '"+data.get(8)+"',"
-               + "`is_customer` = '"+data.get(9)+"',"
-               + "`is_staff` = '"+data.get(10)+"',"
-               + "`fk_gender` = '"+data.get(11)+"'"
-               + " WHERE `person`.`idperson` = "+idperson;
+       sql="UPDATE `persona` "
+               + "SET `cedula` = '"+data.get(0)+"',"
+               + "`nombre` = '"+data.get(1)+"',"
+               + "`apellido` = '"+data.get(2)+"',"
+               + "`fk_tipopersona` = '"+data.get(3)+"',"
+               + "`pais` = '"+data.get(4)+"',"
+               + "`ciudad` = '"+data.get(5)+"',"
+               + "`direccion` = '"+data.get(6)+"',"
+               + "`telefono` = '"+data.get(7)+"',"
+               + "`correo` = '"+data.get(8)+"',"
+               + "`cliente` = '"+data.get(9)+"',"
+               + "`empleado` = '"+data.get(10)+"',"
+               + "`fk_sexo` = '"+data.get(11)+"'"
+               + " WHERE `persona`.`idpersona` = "+idperson;
        
-       cnx.openConnectionToMySQL("Person");
+       cnx.openConnectionToMySQL("OBJ-Person");
        
        System.out.println(sql);
         
@@ -126,14 +129,14 @@ public class Person {
         {
           PreparedStatement pstm=(PreparedStatement)connectionToMySQL.conn.prepareStatement(sql);
           pstm.executeUpdate();
-          JOptionPane.showMessageDialog(null, "Person has been updated sucessfull","System Information",JOptionPane.INFORMATION_MESSAGE);
+          JOptionPane.showMessageDialog(null, "El registro se ha creado exitosamente","System Information",JOptionPane.INFORMATION_MESSAGE);
         } 
         catch (SQLException e)
         {
-            JOptionPane.showMessageDialog(null,"An error occurred while executing your query", "Execute Error !!!",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Ocurrio un error al ejecutar la consulta", "¡Error de ejecucion!",JOptionPane.ERROR_MESSAGE);
         }
        
-        cnx.closeConnectionToMySQL("Person");
+        cnx.closeConnectionToMySQL("OBJ-Person");
     }
     
     public DefaultTableModel getPerson(boolean columns[], String filter){
@@ -141,27 +144,28 @@ public class Person {
         String query = "SELECT ";
         DefaultTableModel personDT = new DefaultTableModel();
         
-        if (columns[0]==true) {personDT.addColumn("#");       query+=" P.idperson,";}
-        if (columns[1]==true) {personDT.addColumn("DNI");        query+=" P.dni,";}
-        if (columns[2]==true) {personDT.addColumn("FIRSTNAME");         query+=" P.firstname,";}
-        if (columns[3]==true) {personDT.addColumn("LASTNAME");        query+=" P.lastname,";}
-        if (columns[4]==true) {personDT.addColumn("BIRTHDAY");        query+=" P.birthday,";}
-        if (columns[5]==true) {personDT.addColumn("COUNTRY");        query+=" P.country,";}    
-        if (columns[6]==true) {personDT.addColumn("CITY");        query+=" P.city,";}  
-        if (columns[7]==true) {personDT.addColumn("ADDRESS");        query+=" P.address,";}
-        if (columns[8]==true) {personDT.addColumn("PHONE");     query+=" P.phone,";}
-        if (columns[9]==true) {personDT.addColumn("EMAIL");     query+=" P.email,";}  
-        if (columns[10]==true) {personDT.addColumn("TYPE");   query+=" IF(P.is_customer = 1, IF(P.is_staff = 1, 'CUSTOMER/STAFF', 'CUSTOMER'), 'STAFF') AS type,";}
-        if (columns[11]==true) {personDT.addColumn("FK_GENDER");   query+=" P.fk_gender,";}       
-        if (columns[12]==true) {personDT.addColumn("GENDER");        query+=" G.gender,";}
+        if (columns[0]==true) {personDT.addColumn("#");       query+=" P.idpersona,";}
+        if (columns[1]==true) {personDT.addColumn("CEDULA");        query+=" P.cedula,";}
+        if (columns[2]==true) {personDT.addColumn("NOMBRES");         query+=" P.nombre,";}
+        if (columns[3]==true) {personDT.addColumn("APELLIDOS");        query+=" P.apellido,";}
+        if (columns[4]==true) {personDT.addColumn("TIPO");        query+=" TP.tipo,";}
+        if (columns[5]==true) {personDT.addColumn("PAIS");        query+=" P.pais,";}    
+        if (columns[6]==true) {personDT.addColumn("CIUDAD");        query+=" P.ciudad,";}  
+        if (columns[7]==true) {personDT.addColumn("DIRECCION");        query+=" P.direccion,";}
+        if (columns[8]==true) {personDT.addColumn("TEL");     query+=" P.telefono,";}
+        if (columns[9]==true) {personDT.addColumn("CORREO");     query+=" P.correo,";}  
+        if (columns[10]==true) {personDT.addColumn("RELACION");   query+=" IF(P.cliente = 1, IF(P.empleado = 1, 'CLIENTE/EMPLEADO', 'CLIENTE'), 'EMPLEADO') AS relacion,";}
+        if (columns[11]==true) {personDT.addColumn("FK_SEXO");   query+=" P.fk_sexo,";}       
+        if (columns[12]==true) {personDT.addColumn("SEXO");        query+=" G.sexo,";}
         
-        sql= query.substring(0, query.length()-1)+" FROM person as  P\n" +
-        "INNER JOIN gender AS G ON G.idgender = P.fk_gender\n" +
+        sql= query.substring(0, query.length()-1)+" FROM persona as  P\n" +
+        "INNER JOIN sexo AS G ON G.idsexo = P.fk_sexo\n" +
+        "INNER JOIN tipopersona AS TP ON TP.idtipopersona = P.fk_tipopersona\n" +
         "HAVING "+ filter;
         System.out.println(sql);
         
         
-        cnx.openConnectionToMySQL("Person");
+        cnx.openConnectionToMySQL("OBJ-Person");
         
         String data[]=new String[personDT.getColumnCount()];        
         try
@@ -182,7 +186,7 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL("Person");
+        cnx.closeConnectionToMySQL("OBJ-Person");
         
         return personDT;
     
@@ -192,23 +196,27 @@ public class Person {
         return genderIndex;
     }
     
+    public int getTyPersonIndex() {
+        return tyPersonIndex;
+    }
+    
     /*
     RETORNA EL INDICE DEL GENERO SELECCIONADO
     */
     public int getGenderIndexByDesc(String gender){
         
-        sql = "SELECT gender.idgender FROM `gender` WHERE gender.gender = '"+gender+"'";
+        sql = "SELECT sexo.idsexo FROM `sexo` WHERE sexo.sexo = '"+gender+"'";
         
-        cnx.openConnectionToMySQL("Person");
+        cnx.openConnectionToMySQL("OBJ-Person");
         
         try
         {
-            PreparedStatement pstm = (PreparedStatement) cnx.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
                 {                                    
-                   genderIndex = res.getInt("idgender");
+                   genderIndex = res.getInt("idsexo");
                 }
             }                        
         }
@@ -217,12 +225,35 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL("Person");
+        cnx.closeConnectionToMySQL("OBJ-Person");
         return genderIndex;
     }
     
-    public void setGenderIndex(int genderIndex) {
-        this.genderIndex = genderIndex;
+    
+    public int getTyPersonIndexByDesc(String tyPerson){
+        
+        sql = "SELECT tipopersona.idtipopersona FROM `tipopersona` WHERE tipopersona.tipo = '"+tyPerson+"'";
+        
+        cnx.openConnectionToMySQL("OBJ-Person");
+        
+        try
+        {
+            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            try (ResultSet res = pstm.executeQuery()) 
+            {                            
+                while(res.next())
+                {                                    
+                   tyPersonIndex = res.getInt("idtipopersona");
+                }
+            }                        
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        
+        cnx.closeConnectionToMySQL("OBJ-Person");
+        return tyPersonIndex;
     }
     
     /*
@@ -232,17 +263,17 @@ public class Person {
     public String [] getGenderList (){
     
         genderIndex=0;
-        sql= "SELECT gender.gender FROM gender WHERE 1 ORDER BY gender.idgender ASC";
-        cnx.openConnectionToMySQL("Person");
+        sql= "SELECT * FROM sexo WHERE 1 ORDER BY sexo.idsexo ASC";
+        cnx.openConnectionToMySQL("OBJ-Person");
         
         try
         {
-            PreparedStatement pstm = (PreparedStatement) cnx.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
                 {                                    
-                   cluster.add(genderIndex, res.getString("gender"));
+                   cluster.add(genderIndex, res.getString("sexo"));
                    genderIndex++;
                 }
                 
@@ -254,10 +285,42 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL("Person");
+        cnx.closeConnectionToMySQL("OBJ-Person");
         
         return genderList;
     }
+    
+    
+    public String [] getTyPersonList (){
+    
+        tyPersonIndex=0;
+        sql= "SELECT * FROM tipopersona WHERE 1 ORDER BY tipopersona.idtipopersona ASC";
+        cnx.openConnectionToMySQL("OBJ-Person");
+        
+        try
+        {
+            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            try (ResultSet res = pstm.executeQuery()) 
+            {                            
+                while(res.next())
+                {                                    
+                   cluster.add(tyPersonIndex, res.getString("tipo"));
+                   tyPersonIndex++;
+                }
+                
+                tyPersonList = cluster.toArray(new String[cluster.size()]);
+            }                        
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        
+        cnx.closeConnectionToMySQL("OBJ-Person");
+        
+        return tyPersonList;
+    }
+    
     
     /*
     RETORNA DE LA LISTA EL ELEMENTO UBICADO EN LA POSICION
@@ -266,9 +329,17 @@ public class Person {
     public String getGenderListItem() {
         return genderList[a];
     }
+    
+    public String getTyPersonListItem(){
+        return tyPersonList[a];
+    }
 
     public void setGenderList(String[] genderList) {
         this.genderList = genderList;
+    }
+    
+    public void setTyPersonList(String [] tyPersonList){
+        this.tyPersonList = tyPersonList;
     }
     
     /*
@@ -278,11 +349,19 @@ public class Person {
     public int getIndexGenderList() {
         return a;
     }
+    
+    public int getIndexTyPersonList(){
+        return a;
+    }
     /*
     ESTABLECE EL VALOR DEL INCIDE DONDE SE ENCUENTRA 
     EL ELEMENTO QUE SE DESEA RECUPERAR DE LA LISTA DE GENEROS
     */
     public void setIndexGenderList(int a) {
+        this.a = a;
+    }
+    
+    public void setIndexTyPersonList(int a){
         this.a = a;
     }
    
