@@ -11,8 +11,6 @@ import com.sincogpro.obj.Person;
 import com.sincogpro.obj.Position;
 import com.sincogpro.utils.JTableHelper;
 import com.sincogpro.utils.RowsRenderer;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.text.JTextComponent;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -42,52 +40,23 @@ public class PersonAdm extends javax.swing.JFrame{
     
     public PersonAdm() {
         initComponents();
-        person.getGenderList();
-        person.getTyPersonList();
-        loadGenderList();
-        loadTyPersonList();
-        initOptions(0);
+        
+       
         fetchPersons(1);
+        
+        tyPersonCmb.setModel(person.getComboTyPerson());
+        genderCmb.setModel(person.getComboGenderList());
+        positionSearchCmb.setModel(position.getComboPositionList());
+        AutoCompleteDecorator.decorate(positionSearchCmb);
+        
+        initOptions(0);
+        
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer) optionList.getCellRenderer(); 
         renderer.setHorizontalAlignment(JLabel.CENTER);
         selectDataFromTable();
-        listPosition();
-    }
-    
-    
-    private void listPosition(){
-        positionSearchCmb.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
-        
-            @Override
-            public void keyReleased(KeyEvent evt){
-            
-                String filter = positionSearchCmb.getEditor().getItem().toString();
-                if(evt.getKeyCode()>=65 && evt.getKeyCode() <=90 || evt.getKeyCode() >= 96 && evt.getKeyCode()<= 105 || evt.getKeyCode() == 8){
-                    positionSearchCmb.setModel(position.getPositionList(filter));
-                    if(positionSearchCmb.getItemCount()>0){
-                        positionSearchCmb.showPopup();
-                        if(evt.getKeyCode()!=8){
-                            ((JTextComponent)positionSearchCmb.getEditor().getEditorComponent()).select(filter.length(), positionSearchCmb.getEditor().getItem().toString().length());
-                        }else{
-                            positionSearchCmb.getEditor().setItem(filter);
-                        }
-                    }else{
-                        positionSearchCmb.getEditor().setItem(filter);
-                    }
-                }
-            }
-        
-        });
-    
-    }
-    
-    private void searchPosition(String filter){
-        String datos [] = position.searchPosition(filter);
-        if(datos[0]!=null){
-            
-        }
         
     }
+    
     
     private void fetchPersons(int opc)
     {
@@ -128,29 +97,6 @@ public class PersonAdm extends javax.swing.JFrame{
         personDT.setDefaultRenderer(Object.class, rr);
         rr.setHorizontalAlignment(SwingConstants.CENTER);
         personDT.getColumnModel().getColumn(0).setCellRenderer(rr);  
-    }
-    
-    /*
-    ESTE METODO SE UTILIZA PARA CARGAR UNA LISTA DE RESULTADOS 
-    EN UN COMBOBOX VACIO.
-    PRIMERO SE DECLARA UN CICLO QUE VA ITERAR LAS VECES NECESARIAS
-    CONTROLADO POR EL NUMERO DE RESULTADOS DE LA CONSULTA A LA BD
-    EN CADA ITERACION SE ESTABLECE EL INDICE DEL ELEMENTO QUE SE
-    VA RECUPERAR, POR ULTIMO SE RECUPERA EL DATO DE LA POSICION
-    ACTUAL DEL INDICE Y SE AGREGA AL MODELO DEL COMBO
-    */
-    private void loadGenderList(){
-        for (int i = 0; i < person.getGenderIndex(); i++) {
-            person.setIndexGenderList(i);
-            genderCmb.addItem(person.getGenderListItem());
-        }
-    }
-    
-    private void loadTyPersonList(){
-        for (int i = 0; i < person.getTyPersonIndex(); i++) {
-            person.setIndexTyPersonList(i);
-            tyPersonCmb.addItem(person.getTyPersonListItem());
-        }
     }
     
     private void selectDataFromTable(){

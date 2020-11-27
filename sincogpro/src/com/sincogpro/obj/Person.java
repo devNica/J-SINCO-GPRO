@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 /**
  *
@@ -19,16 +20,14 @@ public class Person {
     
     private int genderIndex;
     private int tyPersonIndex;
-    private int a; //SE UTILIZA PARA IR RECORRIENDO LOS ELEMENTOS DE LAS LISTAS;
-    private String [] genderList, tyPersonList;
+    String Identificador="OBJ-Person";
     private String sql;
-    ArrayList<String>cluster=new ArrayList<>(); 
     connectionToMySQL cnx = new connectionToMySQL();
     
     
     public ArrayList<String> getPersonById (String idperson){
         ArrayList<String> person = new ArrayList<>();
-        cnx.openConnectionToMySQL("OBJ-Person");
+        cnx.openConnectionToMySQL(Identificador);
         int NUMBER_COLUMNS = 12;
         
         sql = "SELECT  "
@@ -70,7 +69,7 @@ public class Person {
             System.out.println(e);
         }
                 
-        cnx.closeConnectionToMySQL("OBJ-Person");
+        cnx.closeConnectionToMySQL(Identificador);
         
         return person;
         
@@ -78,7 +77,7 @@ public class Person {
     
     public void createPerson (ArrayList<String> data){
         
-        cnx.openConnectionToMySQL("OBJ-Person");
+        cnx.openConnectionToMySQL(Identificador);
         sql = "INSERT INTO "
                 + "`persona` "
                 + "(`idpersona`, `cedula`, `nombre`, `apellido`, "
@@ -102,7 +101,7 @@ public class Person {
             JOptionPane.showMessageDialog(null,"Ocurrio un Error al ejecutar la consulta", "¡Error de Ejecucion!",JOptionPane.ERROR_MESSAGE);
         }
         
-        cnx.closeConnectionToMySQL("OBJ-Person");
+        cnx.closeConnectionToMySQL(Identificador);
     }
     
     public void updatePerson(ArrayList<String> data, String idperson){
@@ -121,7 +120,7 @@ public class Person {
                + "`fk_sexo` = '"+data.get(11)+"'"
                + " WHERE `persona`.`idpersona` = "+idperson;
        
-       cnx.openConnectionToMySQL("OBJ-Person");
+       cnx.openConnectionToMySQL(Identificador);
        
        System.out.println(sql);
         
@@ -136,7 +135,7 @@ public class Person {
             JOptionPane.showMessageDialog(null,"Ocurrio un error al ejecutar la consulta", "¡Error de ejecucion!",JOptionPane.ERROR_MESSAGE);
         }
        
-        cnx.closeConnectionToMySQL("OBJ-Person");
+        cnx.closeConnectionToMySQL(Identificador);
     }
     
     public DefaultTableModel getPerson(boolean columns[], String filter){
@@ -165,7 +164,7 @@ public class Person {
         System.out.println(sql);
         
         
-        cnx.openConnectionToMySQL("OBJ-Person");
+        cnx.openConnectionToMySQL(Identificador);
         
         String data[]=new String[personDT.getColumnCount()];        
         try
@@ -186,19 +185,72 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL("OBJ-Person");
+        cnx.closeConnectionToMySQL(Identificador);
         
         return personDT;
     
     }
     
-    public int getGenderIndex() {
-        return genderIndex;
+    
+    public DefaultComboBoxModel getComboGenderList(){
+         
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        
+        sql = "SELECT * FROM `sexo` WHERE 1";
+        System.out.println(sql);
+        cnx.openConnectionToMySQL(Identificador);
+        
+        try
+        {
+            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            try (ResultSet res = pstm.executeQuery()) 
+            {                            
+                while(res.next())
+                {                                    
+                   model.addElement(res.getString("sexo")); 
+                }
+            }                        
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        
+        cnx.closeConnectionToMySQL(Identificador);
+        
+        return model;
+     
     }
     
-    public int getTyPersonIndex() {
-        return tyPersonIndex;
+    public DefaultComboBoxModel getComboTyPerson(){
+         
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        
+        sql = "SELECT * FROM `tipopersona` WHERE 1";
+        System.out.println(sql);
+        cnx.openConnectionToMySQL(Identificador);
+        
+        try
+        {
+            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            try (ResultSet res = pstm.executeQuery()) 
+            {                            
+                while(res.next())
+                {                                    
+                   model.addElement(res.getString("tipo")); 
+                }
+            }                        
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        
+        cnx.closeConnectionToMySQL(Identificador);
+        
+        return model;
     }
+    
     
     /*
     RETORNA EL INDICE DEL GENERO SELECCIONADO
@@ -207,7 +259,7 @@ public class Person {
         
         sql = "SELECT sexo.idsexo FROM `sexo` WHERE sexo.sexo = '"+gender+"'";
         
-        cnx.openConnectionToMySQL("OBJ-Person");
+        cnx.openConnectionToMySQL(Identificador);
         
         try
         {
@@ -225,7 +277,7 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL("OBJ-Person");
+        cnx.closeConnectionToMySQL(Identificador);
         return genderIndex;
     }
     
@@ -234,7 +286,7 @@ public class Person {
         
         sql = "SELECT tipopersona.idtipopersona FROM `tipopersona` WHERE tipopersona.tipo = '"+tyPerson+"'";
         
-        cnx.openConnectionToMySQL("OBJ-Person");
+        cnx.openConnectionToMySQL(Identificador);
         
         try
         {
@@ -252,118 +304,9 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL("OBJ-Person");
+        cnx.closeConnectionToMySQL(Identificador);
         return tyPersonIndex;
     }
     
-    /*
-    RETORNA UNA LISTA CON LOS RESULTADOS DE LA CONSULTA REALIZADA 
-    DENTRO DEL METODO
-    */
-    public String [] getGenderList (){
-    
-        genderIndex=0;
-        sql= "SELECT * FROM sexo WHERE 1 ORDER BY sexo.idsexo ASC";
-        cnx.openConnectionToMySQL("OBJ-Person");
-        
-        try
-        {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
-            try (ResultSet res = pstm.executeQuery()) 
-            {                            
-                while(res.next())
-                {                                    
-                   cluster.add(genderIndex, res.getString("sexo"));
-                   genderIndex++;
-                }
-                
-                genderList = cluster.toArray(new String[cluster.size()]);
-            }                        
-        }
-        catch(SQLException e)
-        {
-            System.out.println(e);
-        }
-        
-        cnx.closeConnectionToMySQL("OBJ-Person");
-        
-        return genderList;
-    }
-    
-    
-    public String [] getTyPersonList (){
-    
-        tyPersonIndex=0;
-        sql= "SELECT * FROM tipopersona WHERE 1 ORDER BY tipopersona.idtipopersona ASC";
-        cnx.openConnectionToMySQL("OBJ-Person");
-        
-        try
-        {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
-            try (ResultSet res = pstm.executeQuery()) 
-            {                            
-                while(res.next())
-                {                                    
-                   cluster.add(tyPersonIndex, res.getString("tipo"));
-                   tyPersonIndex++;
-                }
-                
-                tyPersonList = cluster.toArray(new String[cluster.size()]);
-            }                        
-        }
-        catch(SQLException e)
-        {
-            System.out.println(e);
-        }
-        
-        cnx.closeConnectionToMySQL("OBJ-Person");
-        
-        return tyPersonList;
-    }
-    
-    
-    /*
-    RETORNA DE LA LISTA EL ELEMENTO UBICADO EN LA POSICION
-    ULTIMA ESTABLECIDA PARA EL INDICE
-    */
-    public String getGenderListItem() {
-        return genderList[a];
-    }
-    
-    public String getTyPersonListItem(){
-        return tyPersonList[a];
-    }
-
-    public void setGenderList(String[] genderList) {
-        this.genderList = genderList;
-    }
-    
-    public void setTyPersonList(String [] tyPersonList){
-        this.tyPersonList = tyPersonList;
-    }
-    
-    /*
-    RETORNA EL VALOR ULTIMO DEL INDICE UTILIZADO 
-    PARA RECORRER LA LISTA DE GENEROS
-    */
-    public int getIndexGenderList() {
-        return a;
-    }
-    
-    public int getIndexTyPersonList(){
-        return a;
-    }
-    /*
-    ESTABLECE EL VALOR DEL INCIDE DONDE SE ENCUENTRA 
-    EL ELEMENTO QUE SE DESEA RECUPERAR DE LA LISTA DE GENEROS
-    */
-    public void setIndexGenderList(int a) {
-        this.a = a;
-    }
-    
-    public void setIndexTyPersonList(int a){
-        this.a = a;
-    }
-   
     
 }
