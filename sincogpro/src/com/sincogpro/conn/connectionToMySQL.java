@@ -39,8 +39,8 @@ public class connectionToMySQL {
         catch(SQLException | ClassNotFoundException e)
         {
             JOptionPane.showMessageDialog(null,
-                        "The connection to the database has been lost",
-                        "Connection Error...",
+                        "No se ha logrado realizar la conexion al servidor de bases de datos",
+                        "Error de conexion...",
             JOptionPane.ERROR_MESSAGE);
            
         }    

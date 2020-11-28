@@ -87,14 +87,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel4" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="optionsPanel" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
+              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="optionsPanel" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -104,11 +99,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jPanel3" max="32767" attributes="0"/>
                   <Component id="optionsPanel" max="32767" attributes="0"/>
+                  <Component id="jPanel3" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -162,7 +155,7 @@
                           <Component id="searchText" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="423" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="466" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -304,13 +297,13 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="0" pref="30" max="32767" attributes="0"/>
-                                      <Component id="addBtn" min="-2" max="-2" attributes="0"/>
+                                      <Component id="addPersonBtn" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="editBtn" min="-2" max="-2" attributes="0"/>
+                                      <Component id="editPersonBtn" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="cancelBtn" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cancelPersonBtn" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="saveBtn" min="-2" max="-2" attributes="0"/>
+                                      <Component id="savePersonBtn" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
@@ -344,66 +337,66 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="dniLabel" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="dniText" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="dniLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="dniText" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="firstnameLabel" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="firstnameText" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="firstnameLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="firstnameText" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lastnameLabel" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="lastnameText" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="lastnameLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="lastnameText" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="countryLabel" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="countryText" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="countryLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="countryText" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="cityLabel" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="cityText" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="cityLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="cityText" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="cityLabel1" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="cityLabel1" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="emailLabel" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="emailText" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="emailLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="emailText" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="phoneText" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="phoneLabel" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="birthdayLabel" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="tyPersonCmb" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="phoneText" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="phoneLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="birthdayLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="tyPersonCmb" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="genderCmb" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="staffChk" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="customerChk" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="relationShipLabel" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="genderLabel" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="genderCmb" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="staffChk" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="customerChk" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="relationShipLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="genderLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="cancelBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="saveBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="addBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="editBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cancelPersonBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="savePersonBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="addPersonBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="editPersonBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jSeparator1" max="32767" attributes="0"/>
                           <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="22" max="32767" attributes="0"/>
+                      <EmptySpace pref="25" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -426,6 +419,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="dniLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="ff" type="rgb"/>
                 </Property>
@@ -434,6 +430,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="firstnameLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="ff" type="rgb"/>
                 </Property>
@@ -442,6 +441,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lastnameLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="ff" type="rgb"/>
                 </Property>
@@ -459,16 +461,31 @@
             </Component>
             <Component class="javax.swing.JLabel" name="phoneLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="33" red="0" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="TELEFONO:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="birthdayLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="33" red="0" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="TIPO:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="genderLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="ff" type="rgb"/>
                 </Property>
@@ -487,6 +504,12 @@
             </Component>
             <Component class="javax.swing.JCheckBox" name="staffChk">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="33" red="0" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="ES EMPLEADO"/>
               </Properties>
               <Events>
@@ -495,18 +518,27 @@
             </Component>
             <Component class="javax.swing.JCheckBox" name="customerChk">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="33" red="0" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="ES CLIENTE"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="relationShipLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="RELACION:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="saveBtn">
+            <Component class="javax.swing.JButton" name="savePersonBtn">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/sincogpro/stf/save32.png"/>
@@ -514,10 +546,10 @@
                 <Property name="text" type="java.lang.String" value="SALVAR"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveBtnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="savePersonBtnActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="addBtn">
+            <Component class="javax.swing.JButton" name="addPersonBtn">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/sincogpro/stf/add32.png"/>
@@ -525,7 +557,7 @@
                 <Property name="text" type="java.lang.String" value="CREAR"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addBtnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addPersonBtnActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane3">
@@ -538,12 +570,22 @@
                 <Component class="javax.swing.JTextArea" name="logText">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Arial" size="13" style="0"/>
+                    </Property>
                     <Property name="rows" type="int" value="5"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder>
+                          <Color PropertyName="color" blue="33" green="0" red="ff" type="rgb"/>
+                        </LineBorder>
+                      </Border>
+                    </Property>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="cancelBtn">
+            <Component class="javax.swing.JButton" name="cancelPersonBtn">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/sincogpro/stf/cancel32.png"/>
@@ -551,7 +593,7 @@
                 <Property name="text" type="java.lang.String" value="CANCELAR"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelBtnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelPersonBtnActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="dniText">
@@ -572,6 +614,12 @@
             </Component>
             <Component class="javax.swing.JLabel" name="countryLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="33" red="0" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="PAIS:"/>
               </Properties>
             </Component>
@@ -586,6 +634,12 @@
             </Component>
             <Component class="javax.swing.JLabel" name="cityLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="33" red="0" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="CIUDAD:"/>
               </Properties>
             </Component>
@@ -600,6 +654,12 @@
             </Component>
             <Component class="javax.swing.JLabel" name="cityLabel1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="33" red="0" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="DIRECCION:"/>
               </Properties>
             </Component>
@@ -621,6 +681,9 @@
             </Container>
             <Component class="javax.swing.JLabel" name="emailLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="1"/>
+                </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="ff" type="rgb"/>
                 </Property>
@@ -642,7 +705,7 @@
                 <Property name="text" type="java.lang.String" value="NOMBRES DE LA PERSONA"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="editBtn">
+            <Component class="javax.swing.JButton" name="editPersonBtn">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/sincogpro/stf/edit32.png"/>
@@ -650,7 +713,7 @@
                 <Property name="text" type="java.lang.String" value="EDITAR"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editBtnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editPersonBtnActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="tyPersonCmb">
@@ -682,15 +745,54 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel2" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jSeparator2" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jLabel2" alignment="0" pref="828" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="addEmployeeBtn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="editEmployeeBtn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="cancelEmployeeBtn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="saveEmployeeBtn" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="positionLabel" min="-2" max="-2" attributes="0"/>
+                                          <Component id="employeeNameLabel" min="-2" max="-2" attributes="0"/>
+                                          <Component id="dniEmployeeLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="oficeLabel" min="-2" max="-2" attributes="0"/>
+                                          <Component id="degreeLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="employeeNameText" max="32767" attributes="0"/>
+                                          <Component id="dniEmployeeText" max="32767" attributes="0"/>
+                                          <Component id="officeSearchCmb" alignment="1" pref="448" max="32767" attributes="0"/>
+                                          <Component id="degreeSearchCmb" alignment="0" max="32767" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jFormattedTextField1" max="32767" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="coinSearchCmb" min="-2" pref="188" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="positionSearchCmb" alignment="1" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jPanel1" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
-                      <Component id="positionSearchCmb" min="-2" pref="460" max="-2" attributes="0"/>
-                      <EmptySpace pref="248" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -699,9 +801,55 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" pref="25" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="positionSearchCmb" min="-2" pref="28" max="-2" attributes="0"/>
-                      <EmptySpace pref="428" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="employeeNameLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="employeeNameText" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="dniEmployeeLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="dniEmployeeText" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="positionLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="positionSearchCmb" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="oficeLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="officeSearchCmb" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="degreeLabel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="degreeSearchCmb" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel3" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="coinSearchCmb" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="jFormattedTextField1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="jPanel1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="addEmployeeBtn" min="-2" max="-2" attributes="0"/>
+                          <Component id="editEmployeeBtn" min="-2" max="-2" attributes="0"/>
+                          <Component id="cancelEmployeeBtn" min="-2" max="-2" attributes="0"/>
+                          <Component id="saveEmployeeBtn" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="170" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -710,7 +858,7 @@
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="PROMOTE REGISTRATION FROM PERSON TO EMPLOYEE"/>
+                <Property name="text" type="java.lang.String" value="FORMULARIO PARA REGISTRO DE EMPLEADOS"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="positionSearchCmb">
@@ -723,6 +871,161 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="positionLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="PUESTO:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="employeeNameLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="NOMBRE:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="employeeNameText">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="NOMBREL EMPLEADO"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="oficeLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="OFICINA:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="officeSearchCmb">
+              <Properties>
+                <Property name="editable" type="boolean" value="true"/>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="dniEmployeeLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="DNI:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="dniEmployeeText">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="NUMERO DE EMPLEADO"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="degreeLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="GRADO:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="degreeSearchCmb">
+              <Properties>
+                <Property name="editable" type="boolean" value="true"/>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="SALARIO:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="MONEDA"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="coinSearchCmb">
+              <Properties>
+                <Property name="editable" type="boolean" value="true"/>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JSeparator" name="jSeparator2">
+            </Component>
+            <Component class="javax.swing.JButton" name="addEmployeeBtn">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/sincogpro/stf/add32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="CREAR"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="editEmployeeBtn">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/sincogpro/stf/edit32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="EDITAR"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="cancelEmployeeBtn">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/sincogpro/stf/cancel32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="CANCELAR"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelEmployeeBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="saveEmployeeBtn">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/sincogpro/stf/save32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="SALVAR"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSeparator" name="jSeparator3">
+            </Component>
+            <Container class="javax.swing.JPanel" name="jPanel1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="cc" red="cc" type="rgb"/>
+                </Property>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                    <LineBorder>
+                      <Color PropertyName="color" blue="66" green="66" red="ff" type="rgb"/>
+                    </LineBorder>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="294" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+            </Container>
+            <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
+              <Properties>
+                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                  <Format subtype="0" type="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="0.00"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -784,48 +1087,6 @@
             </Component>
           </SubComponents>
         </Container>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="jPanel4">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="66" red="0" type="rgb"/>
-        </Property>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel3" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel3">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="11" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="LMARSELL-ADMINISTRADOR"/>
-          </Properties>
-        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
