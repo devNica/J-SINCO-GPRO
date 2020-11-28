@@ -9,23 +9,21 @@ import com.sincogpro.conn.connectionToMySQL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.DefaultComboBoxModel;
 
 /**
  *
- * @author Alejandro Gonzalez
+ * @author RESAINVENTARIO
  */
-public class Position {
-    
+public class Employee {
+    private String EmpNumber;
     private String sql;
     connectionToMySQL cnx = new connectionToMySQL();
-    String Identificador="OBJ-Position";
+    private final String Identificador="OBJ-Employee";
     
-    public DefaultComboBoxModel getComboPositionList(){
+    public String searchEmpNumber(){
+    
+        sql="SELECT FN_SUGERIR_NUMEROEMPLEADO() as NE";
         
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        
-        sql = "SELECT * FROM `puestolaboral` WHERE 1";
         System.out.println(sql);
         cnx.openConnectionToMySQL(Identificador);
         
@@ -36,7 +34,7 @@ public class Position {
             {                            
                 while(res.next())
                 {                                    
-                   model.addElement(res.getString("puesto")); 
+                  EmpNumber = res.getString("NE");
                 }
             }                        
         }
@@ -47,9 +45,7 @@ public class Position {
         
         cnx.closeConnectionToMySQL(Identificador);
         
-        return model;
+        return EmpNumber;
+    
     }
-    
-   
-    
 }

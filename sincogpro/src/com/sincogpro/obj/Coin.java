@@ -15,17 +15,16 @@ import javax.swing.DefaultComboBoxModel;
  *
  * @author Alejandro Gonzalez
  */
-public class Position {
-    
+public class Coin {
     private String sql;
     connectionToMySQL cnx = new connectionToMySQL();
-    String Identificador="OBJ-Position";
+    String Identificador="OBJ-Coin";
     
-    public DefaultComboBoxModel getComboPositionList(){
+    public DefaultComboBoxModel getComboCoinList(){
         
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         
-        sql = "SELECT * FROM `puestolaboral` WHERE 1";
+        sql = "SELECT * FROM `moneda` WHERE 1";
         System.out.println(sql);
         cnx.openConnectionToMySQL(Identificador);
         
@@ -36,7 +35,7 @@ public class Position {
             {                            
                 while(res.next())
                 {                                    
-                   model.addElement(res.getString("puesto")); 
+                   model.addElement(res.getString("descripcion")); 
                 }
             }                        
         }
@@ -49,7 +48,4 @@ public class Position {
         
         return model;
     }
-    
-   
-    
 }
