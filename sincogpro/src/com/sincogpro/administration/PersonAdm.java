@@ -6,13 +6,13 @@ Developed by Lucas Andres Marsell
  */
 package com.sincogpro.administration;
 
-import com.sincogpro.obj.Coin;
-import com.sincogpro.obj.Degree;
-import com.sincogpro.obj.Employee;
-import com.sincogpro.obj.ErrorHandler;
-import com.sincogpro.obj.Organization;
-import com.sincogpro.obj.Person;
-import com.sincogpro.obj.Position;
+import com.sincogpro.modelos.Coin;
+import com.sincogpro.modelos.Degree;
+import com.sincogpro.modelos.Employee;
+import com.sincogpro.modelos.ErrorHandler;
+import com.sincogpro.modelos.Organization;
+import com.sincogpro.modelos.Person;
+import com.sincogpro.modelos.Position;
 import com.sincogpro.utils.JTableHelper;
 import com.sincogpro.utils.RowsRenderer;
 import java.util.ArrayList;
@@ -65,9 +65,10 @@ public class PersonAdm extends javax.swing.JFrame{
         AutoCompleteDecorator.decorate(coinSearchCmb);
         
         initOptions(0);
+        employeeFormLaunchOptions(0);
         
-        DefaultListCellRenderer renderer =  (DefaultListCellRenderer) optionList.getCellRenderer(); 
-        renderer.setHorizontalAlignment(JLabel.CENTER);
+        //DefaultListCellRenderer renderer =  (DefaultListCellRenderer) optionList.getCellRenderer(); 
+        //renderer.setHorizontalAlignment(JLabel.CENTER);
         selectDataFromTable();
         
     }
@@ -215,6 +216,81 @@ public class PersonAdm extends javax.swing.JFrame{
                 
         }
         
+    }
+    
+    private void employeeFormLaunchOptions(int opc){
+        switch(opc){
+            
+            case 0:
+                disableEmployeeFormFields();
+                disableEmployeeFormButtons();
+            break;
+            
+            case 1:
+                addEmployeeBtn.setEnabled(true);
+               
+            break;
+            
+            case 2:
+                enableEmployeeFormFields();
+                cancelEmployeeBtn.setEnabled(true);
+                saveEmployeeBtn.setEnabled(true);
+            break;
+            
+            case 3:
+                
+            break;
+            
+            case 4:
+                clearEmployeeFormFields();
+                disableEmployeeFormFields();
+                disableEmployeeFormButtons();
+                        
+            break;
+        }
+    }
+    
+    private void disableEmployeeFormFields(){
+        boolean status=false;
+        employeeNameText.setEnabled(status);
+        dniEmployeeText.setEnabled(status);
+        positionSearchCmb.setEnabled(status);
+        officeSearchCmb.setEnabled(status);
+        salaryEmployeText.setEnabled(status);
+        degreeSearchCmb.setEnabled(status);
+        coinSearchCmb.setEnabled(status);
+        
+    }
+    
+    private void enableEmployeeFormFields(){
+        boolean status=true;
+        employeeNameText.setEnabled(status);
+        dniEmployeeText.setEnabled(status);
+        positionSearchCmb.setEnabled(status);
+        officeSearchCmb.setEnabled(status);
+        salaryEmployeText.setEnabled(status);
+        degreeSearchCmb.setEnabled(status);
+        coinSearchCmb.setEnabled(status);
+        
+    }
+    
+    private void clearEmployeeFormFields(){
+        employeeNameText.setText("NOMBRE DEL EMPLEADO");
+        dniEmployeeText.setText("NUMERO DE EMPLEADO");
+        positionSearchCmb.setSelectedIndex(0);
+        officeSearchCmb.setSelectedIndex(0);
+        salaryEmployeText.setText("0.00");
+        degreeSearchCmb.setSelectedIndex(0);
+        coinSearchCmb.setSelectedIndex(0);
+    }
+    
+    
+    private void disableEmployeeFormButtons(){
+        boolean status=false;
+        addEmployeeBtn.setEnabled(status);
+        editEmployeeBtn.setEnabled(status);
+        cancelEmployeeBtn.setEnabled(status);
+        saveEmployeeBtn.setEnabled(status);
     }
     
     private void disableTextField(){
@@ -402,10 +478,7 @@ public class PersonAdm extends javax.swing.JFrame{
         saveEmployeeBtn = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        optionList = new javax.swing.JList<>();
+        salaryEmployeText = new javax.swing.JFormattedTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -512,7 +585,7 @@ public class PersonAdm extends javax.swing.JFrame{
         registrationPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("FORMULARIO PARA REGISTRO DE DATOS DE PERSONAS");
+        jLabel1.setText("FORMULARIO PARA REGISTRO PERSONAS");
 
         jSeparator1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -782,10 +855,10 @@ public class PersonAdm extends javax.swing.JFrame{
                             .addComponent(editPersonBtn)))
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane3))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
-        optionsPanel.addTab("FICHA", registrationPanel);
+        optionsPanel.addTab("FICHA PERSONA", registrationPanel);
 
         personToEmployeePanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -822,6 +895,11 @@ public class PersonAdm extends javax.swing.JFrame{
 
         addEmployeeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/add32.png"))); // NOI18N
         addEmployeeBtn.setText("CREAR");
+        addEmployeeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEmployeeBtnActionPerformed(evt);
+            }
+        });
 
         editEmployeeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/edit32.png"))); // NOI18N
         editEmployeeBtn.setText("EDITAR");
@@ -851,9 +929,9 @@ public class PersonAdm extends javax.swing.JFrame{
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedTextField1.setText("0.00");
+        salaryEmployeText.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        salaryEmployeText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        salaryEmployeText.setText("0.00");
 
         javax.swing.GroupLayout personToEmployeePanelLayout = new javax.swing.GroupLayout(personToEmployeePanel);
         personToEmployeePanel.setLayout(personToEmployeePanelLayout);
@@ -889,7 +967,7 @@ public class PersonAdm extends javax.swing.JFrame{
                                     .addComponent(officeSearchCmb, javax.swing.GroupLayout.Alignment.TRAILING, 0, 448, Short.MAX_VALUE)
                                     .addComponent(degreeSearchCmb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, personToEmployeePanelLayout.createSequentialGroup()
-                                        .addComponent(jFormattedTextField1)
+                                        .addComponent(salaryEmployeText)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel4)
                                         .addGap(18, 18, 18)
@@ -934,7 +1012,7 @@ public class PersonAdm extends javax.swing.JFrame{
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(coinSearchCmb, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(salaryEmployeText, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -948,33 +1026,6 @@ public class PersonAdm extends javax.swing.JFrame{
         );
 
         optionsPanel.addTab("PERSONA -> EMPLEADO", personToEmployeePanel);
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        optionList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        optionList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane2.setViewportView(optionList);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
-        );
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -992,9 +1043,7 @@ public class PersonAdm extends javax.swing.JFrame{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(optionsPanel)
                 .addContainerGap())
         );
@@ -1002,9 +1051,7 @@ public class PersonAdm extends javax.swing.JFrame{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(optionsPanel)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1155,6 +1202,7 @@ public class PersonAdm extends javax.swing.JFrame{
        optionsPanel.setSelectedIndex(2);
        employeeNameText.setText(FULLNAME);
        dniEmployeeText.setText(employee.searchEmpNumber());
+        employeeFormLaunchOptions(1);
        
     }//GEN-LAST:event_personToEmployeeItemActionPerformed
 
@@ -1163,8 +1211,12 @@ public class PersonAdm extends javax.swing.JFrame{
     }//GEN-LAST:event_staffChkActionPerformed
 
     private void cancelEmployeeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelEmployeeBtnActionPerformed
-        // TODO add your handling code here:
+        employeeFormLaunchOptions(4);
     }//GEN-LAST:event_cancelEmployeeBtnActionPerformed
+
+    private void addEmployeeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeBtnActionPerformed
+        employeeFormLaunchOptions(2);
+    }//GEN-LAST:event_addEmployeeBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1177,7 +1229,7 @@ public class PersonAdm extends javax.swing.JFrame{
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -1240,7 +1292,6 @@ public class PersonAdm extends javax.swing.JFrame{
     private javax.swing.JTextField firstnameText;
     private javax.swing.JComboBox<String> genderCmb;
     private javax.swing.JLabel genderLabel;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1251,9 +1302,7 @@ public class PersonAdm extends javax.swing.JFrame{
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
@@ -1264,7 +1313,6 @@ public class PersonAdm extends javax.swing.JFrame{
     private javax.swing.JTextArea logText;
     private javax.swing.JComboBox<String> officeSearchCmb;
     private javax.swing.JLabel oficeLabel;
-    private javax.swing.JList<String> optionList;
     private javax.swing.JTabbedPane optionsPanel;
     private javax.swing.JTable personDT;
     private javax.swing.JMenuItem personToEmployeeItem;
@@ -1276,6 +1324,7 @@ public class PersonAdm extends javax.swing.JFrame{
     private javax.swing.JPanel recordsPanel;
     private javax.swing.JPanel registrationPanel;
     private javax.swing.JLabel relationShipLabel;
+    private javax.swing.JFormattedTextField salaryEmployeText;
     private javax.swing.JButton saveEmployeeBtn;
     private javax.swing.JButton savePersonBtn;
     private javax.swing.JLabel searchLabel;
