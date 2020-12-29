@@ -3,38 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sincogpro.obj;
+package com.sincogpro.modelos;
 
-import com.sincogpro.conn.connectionToMySQL;
+import com.sincogpro.conn.ConexionMySQL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
- * @author RESAINVENTARIO
+ * @author Alejandro Gonzalez
  */
-public class Employee {
-    private String EmpNumber;
+public class Coin {
     private String sql;
-    connectionToMySQL cnx = new connectionToMySQL();
-    private final String Identificador="OBJ-Employee";
-    
-    public String searchEmpNumber(){
-    
-        sql="SELECT FN_SUGERIR_NUMEROEMPLEADO() as NE";
+    ConexionMySQL cnx = new ConexionMySQL();
+    public DefaultComboBoxModel getComboCoinList(){
         
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        
+        sql = "SELECT * FROM `moneda` WHERE 1";
         System.out.println(sql);
-        cnx.openConnectionToMySQL(Identificador);
+        cnx.abrirConexionMySQL();
         
         try
         {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
                 {                                    
-                  EmpNumber = res.getString("NE");
+                   model.addElement(res.getString("descripcion")); 
                 }
             }                        
         }
@@ -43,9 +42,8 @@ public class Employee {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
         
-        return EmpNumber;
-    
+        return model;
     }
 }

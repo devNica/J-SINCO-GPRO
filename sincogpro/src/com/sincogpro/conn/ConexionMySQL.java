@@ -5,7 +5,7 @@
  */
 package com.sincogpro.conn;
 
-import com.sincogpro.credentials.Credentials;
+import com.sincogpro.credenciales.Credenciales;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,25 +15,23 @@ import javax.swing.JOptionPane;
  *
  * @author Alejandro Gonzalez
  */
-public class connectionToMySQL {
+public class ConexionMySQL {
     
     public static Connection conn = null;
-    private final String PORT = Credentials.PORT;
-    private final String PASSWORD = Credentials.PASSWORD;
-    private final String USERNAME = Credentials.USERNAME;
-    private final String DATABASE = Credentials.DATABASE;
-    private final String URL = Credentials.URL;
+    private final String PASSWORD = Credenciales.PASSWORD;
+    private final String USUARIO = Credenciales.USERNAME;
+    private final String BASEDATOS = Credenciales.DATABASE;
+    private final String URL = Credenciales.URL;
     
-    public  void openConnectionToMySQL(String obj)
+    public  void abrirConexionMySQL()
     {        
         try
         {         
             Class.forName("com.mysql.jdbc.Driver");
-            conn = (Connection) DriverManager.getConnection(URL,USERNAME,PASSWORD);
+            conn = (Connection) DriverManager.getConnection(URL,USUARIO,PASSWORD);
             if (conn!=null)
             {
-                System.out.println("The connection to the database:\t"+DATABASE+"\nis Successful");
-                System.out.println("the connection requested by the object was opened:\t"+obj);
+                System.out.println("Conexion a la base de datos:\t"+BASEDATOS+"\nsatisfactoria");
             }
         }
         catch(SQLException | ClassNotFoundException e)
@@ -47,12 +45,12 @@ public class connectionToMySQL {
     }
     
     //CERRAR LA CONEXION A LA BASE DE DATOS
-    public void closeConnectionToMySQL(String obj)
+    public void cerrarConexionMySQL()
     {
         try 
         {
             conn.close();
-            System.out.println("The connection requested by the object was closed:\t"+obj);
+            System.out.println("La conexion a la base de datos se ha cerrado");
         } 
         catch (SQLException e) 
         {
