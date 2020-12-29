@@ -5,7 +5,6 @@
  */
 package com.sincogpro.administration;
 
-import com.sincogpro.controlador.ControladorSocio;
 import java.util.regex.Pattern;
 
 /**
@@ -18,15 +17,9 @@ public class SocioPanel extends javax.swing.JPanel {
     Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     
-    
     public SocioPanel() {
         initComponents();
     }
-    
-    
-    
- 
-    
     
     
     /**
@@ -38,14 +31,58 @@ public class SocioPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        FichasPanel = new javax.swing.JTabbedPane();
+        consultaModeloSocio1 = new com.sincogpro.consultas.ConsultaModeloSocio();
+        entidadGrupo = new javax.swing.ButtonGroup();
+        FichaSocio = new javax.swing.JTabbedPane();
         ListaSocioPanel = new javax.swing.JPanel();
         EtiquetaTitulo = new javax.swing.JLabel();
         EtiquetaBusquedaSocio = new javax.swing.JLabel();
         CampoBusquedaSocio = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaSocio = new javax.swing.JTable();
+        tablaSocioDT = new javax.swing.JTable();
         RegistroSocioPanel = new javax.swing.JPanel();
+        razonSocialLbl = new javax.swing.JLabel();
+        razonSocialTxt = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        codigoSocioLbl = new javax.swing.JLabel();
+        codigoSocioTxt = new javax.swing.JTextField();
+        personaRbt = new javax.swing.JRadioButton();
+        empresaRbt = new javax.swing.JRadioButton();
+        clienteChk = new javax.swing.JCheckBox();
+        proveedorChk = new javax.swing.JCheckBox();
+        empleadoChk = new javax.swing.JCheckBox();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        razonComercialLbl = new javax.swing.JLabel();
+        razonComercialTXt = new javax.swing.JTextField();
+        cedulaLbl = new javax.swing.JLabel();
+        cedulaTxt = new javax.swing.JTextField();
+        rucLbl = new javax.swing.JLabel();
+        rucTxt = new javax.swing.JTextField();
+        direccionLbl = new javax.swing.JLabel();
+        direccionTxt = new javax.swing.JTextField();
+        telf1Lbl = new javax.swing.JLabel();
+        telf1Txt = new javax.swing.JFormattedTextField();
+        telf2Lbl = new javax.swing.JLabel();
+        telf2Txt = new javax.swing.JFormattedTextField();
+        email1Lbl = new javax.swing.JLabel();
+        email1Txt = new javax.swing.JTextField();
+        email2Lbl = new javax.swing.JLabel();
+        email2Txt = new javax.swing.JTextField();
+        creditoChk = new javax.swing.JCheckBox();
+        limiteCreditoLbl = new javax.swing.JLabel();
+        limiteCreditoTxt = new javax.swing.JTextField();
+        descuentoLbl = new javax.swing.JLabel();
+        descuentoTxt = new javax.swing.JTextField();
+        regimenPagoLbl = new javax.swing.JLabel();
+        regimenPagoCmb = new javax.swing.JComboBox<>();
+        regimenCobroLbl = new javax.swing.JLabel();
+        regimenCobroCmb = new javax.swing.JComboBox<>();
+        activoChk = new javax.swing.JCheckBox();
+        crearBtn = new javax.swing.JButton();
+        editarBtn = new javax.swing.JButton();
+        cancelarBtn = new javax.swing.JButton();
+        guardarBtn = new javax.swing.JButton();
 
         ListaSocioPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -74,7 +111,7 @@ public class SocioPanel extends javax.swing.JPanel {
             }
         });
 
-        TablaSocio.setModel(new javax.swing.table.DefaultTableModel(
+        tablaSocioDT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -85,7 +122,7 @@ public class SocioPanel extends javax.swing.JPanel {
 
             }
         ));
-        jScrollPane1.setViewportView(TablaSocio);
+        jScrollPane1.setViewportView(tablaSocioDT);
 
         javax.swing.GroupLayout ListaSocioPanelLayout = new javax.swing.GroupLayout(ListaSocioPanel);
         ListaSocioPanel.setLayout(ListaSocioPanelLayout);
@@ -95,7 +132,7 @@ public class SocioPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(ListaSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(EtiquetaTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ListaSocioPanelLayout.createSequentialGroup()
                         .addComponent(EtiquetaBusquedaSocio)
                         .addGap(18, 18, 18)
@@ -112,36 +149,336 @@ public class SocioPanel extends javax.swing.JPanel {
                     .addComponent(EtiquetaBusquedaSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CampoBusquedaSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        FichasPanel.addTab("REGISTROS", ListaSocioPanel);
+        FichaSocio.addTab("REGISTROS", ListaSocioPanel);
 
         RegistroSocioPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        razonSocialLbl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        razonSocialLbl.setText("RAZON SOCIAL:");
+
+        razonSocialTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        razonSocialTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                razonSocialTxtActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("FICHA REGISTRO Y EDICION DE DATOS DE SOCIO");
+
+        codigoSocioLbl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        codigoSocioLbl.setText("CODIGO SOCIO:");
+
+        codigoSocioTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        entidadGrupo.add(personaRbt);
+        personaRbt.setText("PERSONA");
+        personaRbt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                personaRbtActionPerformed(evt);
+            }
+        });
+
+        entidadGrupo.add(empresaRbt);
+        empresaRbt.setText("EMPRESA");
+
+        clienteChk.setText("CLIENTE");
+
+        proveedorChk.setText("PROVEEDOR");
+        proveedorChk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proveedorChkActionPerformed(evt);
+            }
+        });
+
+        empleadoChk.setText("EMPLEADO");
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        razonComercialLbl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        razonComercialLbl.setText("RAZON COMERCIAL:");
+
+        razonComercialTXt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        razonComercialTXt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                razonComercialTXtActionPerformed(evt);
+            }
+        });
+
+        cedulaLbl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cedulaLbl.setText("CEDULA:");
+
+        cedulaTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        cedulaTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cedulaTxtActionPerformed(evt);
+            }
+        });
+
+        rucLbl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        rucLbl.setText("RUC/NIT:");
+
+        rucTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        rucTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rucTxtActionPerformed(evt);
+            }
+        });
+
+        direccionLbl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        direccionLbl.setText("DIRECCION:");
+
+        direccionTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        direccionTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                direccionTxtActionPerformed(evt);
+            }
+        });
+
+        telf1Lbl.setText("TELF1:");
+
+        try {
+            telf1Txt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        telf1Txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        telf2Lbl.setText("TELF2:");
+
+        try {
+            telf2Txt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        telf2Txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        email1Lbl.setText("EMAIL1:");
+
+        email1Txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        email2Lbl.setText("EMAIL2:");
+
+        email2Txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        creditoChk.setText("CREDITO");
+
+        limiteCreditoLbl.setText("LIMITE CREDITO:");
+
+        limiteCreditoTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        descuentoLbl.setText("DESCUENTO:");
+
+        descuentoTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        regimenPagoLbl.setText("REG PAGO:");
+
+        regimenCobroLbl.setText("REG COBRO:");
+
+        activoChk.setText("ACTIVO");
+
+        crearBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/add32.png"))); // NOI18N
+        crearBtn.setText("CREAR");
+
+        editarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/edit32.png"))); // NOI18N
+        editarBtn.setText("EDITAR");
+
+        cancelarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/cancel32.png"))); // NOI18N
+        cancelarBtn.setText("CANCELAR");
+
+        guardarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/save32.png"))); // NOI18N
+        guardarBtn.setText("GUARDAR");
 
         javax.swing.GroupLayout RegistroSocioPanelLayout = new javax.swing.GroupLayout(RegistroSocioPanel);
         RegistroSocioPanel.setLayout(RegistroSocioPanelLayout);
         RegistroSocioPanelLayout.setHorizontalGroup(
             RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 869, Short.MAX_VALUE)
+            .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                                    .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(razonComercialLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                                            .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(cedulaLbl)
+                                                .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(codigoSocioLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(razonSocialLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addComponent(rucLbl))
+                                            .addGap(20, 20, 20)))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cedulaTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(codigoSocioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(razonSocialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(razonComercialTXt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rucTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                                    .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(direccionLbl)
+                                        .addComponent(telf1Lbl)
+                                        .addComponent(email1Lbl)
+                                        .addComponent(creditoChk)
+                                        .addComponent(activoChk))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(direccionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegistroSocioPanelLayout.createSequentialGroup()
+                                            .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(email1Txt, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(telf1Txt)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, RegistroSocioPanelLayout.createSequentialGroup()
+                                                    .addComponent(limiteCreditoLbl)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(limiteCreditoTxt))
+                                                .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                                                    .addComponent(regimenPagoLbl)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(regimenPagoCmb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                                                    .addComponent(telf2Lbl)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(telf2Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                                                    .addComponent(email2Lbl)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(email2Txt))
+                                                .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                                                    .addComponent(descuentoLbl)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(descuentoTxt))
+                                                .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                                                    .addComponent(regimenCobroLbl)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(regimenCobroCmb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                                            .addComponent(crearBtn)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(editarBtn)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(cancelarBtn)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(guardarBtn)))))))
+                    .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(personaRbt)
+                        .addGap(18, 18, 18)
+                        .addComponent(empresaRbt)
+                        .addGap(18, 18, 18)
+                        .addComponent(clienteChk)
+                        .addGap(18, 18, 18)
+                        .addComponent(proveedorChk)
+                        .addGap(18, 18, 18)
+                        .addComponent(empleadoChk)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         RegistroSocioPanelLayout.setVerticalGroup(
             RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
+            .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator1)
+                    .addGroup(RegistroSocioPanelLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(personaRbt)
+                            .addComponent(empresaRbt)
+                            .addComponent(clienteChk)
+                            .addComponent(proveedorChk)
+                            .addComponent(empleadoChk))
+                        .addGap(28, 28, 28)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(codigoSocioLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(codigoSocioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(razonSocialLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(razonSocialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(razonComercialLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(razonComercialTXt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cedulaLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cedulaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rucLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rucTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(direccionLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(direccionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(telf1Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(telf1Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(telf2Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(telf2Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(email1Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(email1Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(email2Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(email2Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(creditoChk)
+                            .addComponent(limiteCreditoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(limiteCreditoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(descuentoLbl)
+                            .addComponent(descuentoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(regimenPagoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(regimenPagoCmb, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(regimenCobroLbl)
+                            .addComponent(regimenCobroCmb, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(activoChk))
+                        .addGap(33, 33, 33)
+                        .addGroup(RegistroSocioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(crearBtn)
+                            .addComponent(editarBtn)
+                            .addComponent(cancelarBtn)
+                            .addComponent(guardarBtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
-        FichasPanel.addTab("FICHA PERSONA", RegistroSocioPanel);
+        FichaSocio.addTab("FICHA PERSONA", RegistroSocioPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(FichasPanel)
+            .addComponent(FichaSocio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(FichasPanel)
+            .addComponent(FichaSocio)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -157,15 +494,87 @@ public class SocioPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_CampoBusquedaSocioKeyReleased
 
+    private void razonSocialTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_razonSocialTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_razonSocialTxtActionPerformed
+
+    private void personaRbtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaRbtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_personaRbtActionPerformed
+
+    private void proveedorChkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proveedorChkActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_proveedorChkActionPerformed
+
+    private void razonComercialTXtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_razonComercialTXtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_razonComercialTXtActionPerformed
+
+    private void cedulaTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedulaTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cedulaTxtActionPerformed
+
+    private void rucTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rucTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rucTxtActionPerformed
+
+    private void direccionTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_direccionTxtActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField CampoBusquedaSocio;
     private javax.swing.JLabel EtiquetaBusquedaSocio;
     private javax.swing.JLabel EtiquetaTitulo;
-    private javax.swing.JTabbedPane FichasPanel;
+    private javax.swing.JTabbedPane FichaSocio;
     private javax.swing.JPanel ListaSocioPanel;
     private javax.swing.JPanel RegistroSocioPanel;
-    public javax.swing.JTable TablaSocio;
+    public javax.swing.JCheckBox activoChk;
+    public javax.swing.JButton cancelarBtn;
+    private javax.swing.JLabel cedulaLbl;
+    public javax.swing.JTextField cedulaTxt;
+    public javax.swing.JCheckBox clienteChk;
+    private javax.swing.JLabel codigoSocioLbl;
+    public javax.swing.JTextField codigoSocioTxt;
+    private com.sincogpro.consultas.ConsultaModeloSocio consultaModeloSocio1;
+    public javax.swing.JButton crearBtn;
+    public javax.swing.JCheckBox creditoChk;
+    private javax.swing.JLabel descuentoLbl;
+    public javax.swing.JTextField descuentoTxt;
+    private javax.swing.JLabel direccionLbl;
+    public javax.swing.JTextField direccionTxt;
+    public javax.swing.JButton editarBtn;
+    private javax.swing.JLabel email1Lbl;
+    public javax.swing.JTextField email1Txt;
+    private javax.swing.JLabel email2Lbl;
+    public javax.swing.JTextField email2Txt;
+    public javax.swing.JCheckBox empleadoChk;
+    public javax.swing.JRadioButton empresaRbt;
+    private javax.swing.ButtonGroup entidadGrupo;
+    public javax.swing.JButton guardarBtn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel limiteCreditoLbl;
+    public javax.swing.JTextField limiteCreditoTxt;
+    public javax.swing.JRadioButton personaRbt;
+    public javax.swing.JCheckBox proveedorChk;
+    private javax.swing.JLabel razonComercialLbl;
+    public javax.swing.JTextField razonComercialTXt;
+    private javax.swing.JLabel razonSocialLbl;
+    public javax.swing.JTextField razonSocialTxt;
+    public javax.swing.JComboBox<String> regimenCobroCmb;
+    private javax.swing.JLabel regimenCobroLbl;
+    public javax.swing.JComboBox<String> regimenPagoCmb;
+    private javax.swing.JLabel regimenPagoLbl;
+    private javax.swing.JLabel rucLbl;
+    public javax.swing.JTextField rucTxt;
+    public javax.swing.JTable tablaSocioDT;
+    private javax.swing.JLabel telf1Lbl;
+    public javax.swing.JFormattedTextField telf1Txt;
+    private javax.swing.JLabel telf2Lbl;
+    public javax.swing.JFormattedTextField telf2Txt;
     // End of variables declaration//GEN-END:variables
 }

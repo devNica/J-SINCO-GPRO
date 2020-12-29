@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sincogpro.obj;
+package com.sincogpro.modelos;
 
-import com.sincogpro.conn.connectionToMySQL;
+import com.sincogpro.conn.ConexionMySQL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,28 +15,27 @@ import javax.swing.DefaultComboBoxModel;
  *
  * @author RESAINVENTARIO
  */
-public class Degree {
+public class Organization {
     
     private String sql;
-    connectionToMySQL cnx = new connectionToMySQL();
-    String Identificador="OBJ-Degree";
+    ConexionMySQL cnx = new ConexionMySQL();
     
-    public DefaultComboBoxModel getComboDegreeList(){
+    public DefaultComboBoxModel getCmbOfficeList(){
         
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         
-        sql = "SELECT * FROM `nivelacademico` WHERE 1";
+        sql = "SELECT * FROM `organizacion` WHERE 1";
         System.out.println(sql);
-        cnx.openConnectionToMySQL(Identificador);
+        cnx.abrirConexionMySQL();
         
         try
         {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
                 {                                    
-                   model.addElement(res.getString("nivel")); 
+                   model.addElement(res.getString("oficina")); 
                 }
             }                        
         }
@@ -45,9 +44,8 @@ public class Degree {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
         
         return model;
     }
-    
 }

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sincogpro.obj;
+package com.sincogpro.modelos;
 
-import com.sincogpro.conn.connectionToMySQL;
+import com.sincogpro.conn.ConexionMySQL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,29 +13,29 @@ import javax.swing.DefaultComboBoxModel;
 
 /**
  *
- * @author Alejandro Gonzalez
+ * @author RESAINVENTARIO
  */
-public class Coin {
-    private String sql;
-    connectionToMySQL cnx = new connectionToMySQL();
-    String Identificador="OBJ-Coin";
+public class Degree {
     
-    public DefaultComboBoxModel getComboCoinList(){
+    private String sql;
+    ConexionMySQL cnx = new ConexionMySQL();
+    
+    public DefaultComboBoxModel getComboDegreeList(){
         
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         
-        sql = "SELECT * FROM `moneda` WHERE 1";
+        sql = "SELECT * FROM `nivelacademico` WHERE 1";
         System.out.println(sql);
-        cnx.openConnectionToMySQL(Identificador);
+        cnx.abrirConexionMySQL();
         
         try
         {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
                 {                                    
-                   model.addElement(res.getString("descripcion")); 
+                   model.addElement(res.getString("nivel")); 
                 }
             }                        
         }
@@ -44,8 +44,9 @@ public class Coin {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
         
         return model;
     }
+    
 }

@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sincogpro.obj;
-import com.sincogpro.conn.connectionToMySQL;
+package com.sincogpro.modelos;
+import com.sincogpro.conn.ConexionMySQL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,14 +20,16 @@ public class Person {
     
     private int genderIndex;
     private int tyPersonIndex;
-    String Identificador="OBJ-Person";
+    String Identificador="OBJ-Person", table="persona";
+    
     private String sql;
-    connectionToMySQL cnx = new connectionToMySQL();
+    ConexionMySQL cnx = new ConexionMySQL();
     
     
     public ArrayList<String> getPersonById (String idperson){
+        
         ArrayList<String> person = new ArrayList<>();
-        cnx.openConnectionToMySQL(Identificador);
+        cnx.abrirConexionMySQL();
         int NUMBER_COLUMNS = 12;
         
         sql = "SELECT  "
@@ -54,7 +56,7 @@ public class Person {
         
         try
         {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
@@ -69,7 +71,7 @@ public class Person {
             System.out.println(e);
         }
                 
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
         
         return person;
         
@@ -77,65 +79,69 @@ public class Person {
     
     public void createPerson (ArrayList<String> data){
         
-        cnx.openConnectionToMySQL(Identificador);
-        sql = "INSERT INTO "
-                + "`persona` "
-                + "(`idpersona`, `cedula`, `nombre`, `apellido`, "
-                + "`fk_tipopersona`, `pais`, `ciudad`, `direccion`, `telefono`, "
-                + "`correo`, `cliente`, `empleado`, `fk_sexo`) "
-                + "VALUES (NULL, '"+data.get(0)+"', '"+data.get(1)+"', '"+data.get(2)+"', "
-                + "'"+data.get(3)+"', '"+data.get(4)+"', '"+data.get(5)+"', '"+data.get(6)+"', "
-                + "'"+data.get(7)+"', '"+data.get(8)+"', '"+data.get(9)+"', '"+data.get(10)+"', "
-                + "'"+data.get(11)+"'); ";
-        
-        System.out.println(sql);
+        cnx.abrirConexionMySQL();
         
         try 
         {
-          PreparedStatement pstm=(PreparedStatement)connectionToMySQL.conn.prepareStatement(sql);
-          pstm.executeUpdate();
-          JOptionPane.showMessageDialog(null, "Los datos se han registrado satisfactoriamente","System Information",JOptionPane.INFORMATION_MESSAGE);
+          
+            sql="INSERT INTO "+table+" "
+            + "(idpersona, cedula, nombre, apellido, fk_tipopersona, pais, ciudad, direccion, telefono, correo, cliente, empleado, fk_sexo) "
+            + "VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?)";
+          
+            PreparedStatement pstm=(PreparedStatement)ConexionMySQL.conn.prepareStatement(sql);
+            
+            for (int i = 0; i < data.size(); i++) {
+                pstm.setString(i+1, data.get(i));
+            }
+          
+            pstm.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Los datos se han registrado satisfactoriamente","System Information",JOptionPane.INFORMATION_MESSAGE);
         } 
         catch (SQLException e)
         {
             JOptionPane.showMessageDialog(null,"Ocurrio un Error al ejecutar la consulta", "¡Error de Ejecucion!",JOptionPane.ERROR_MESSAGE);
         }
         
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
     }
     
     public void updatePerson(ArrayList<String> data, String idperson){
-       sql="UPDATE `persona` "
-               + "SET `cedula` = '"+data.get(0)+"',"
-               + "`nombre` = '"+data.get(1)+"',"
-               + "`apellido` = '"+data.get(2)+"',"
-               + "`fk_tipopersona` = '"+data.get(3)+"',"
-               + "`pais` = '"+data.get(4)+"',"
-               + "`ciudad` = '"+data.get(5)+"',"
-               + "`direccion` = '"+data.get(6)+"',"
-               + "`telefono` = '"+data.get(7)+"',"
-               + "`correo` = '"+data.get(8)+"',"
-               + "`cliente` = '"+data.get(9)+"',"
-               + "`empleado` = '"+data.get(10)+"',"
-               + "`fk_sexo` = '"+data.get(11)+"'"
-               + " WHERE `persona`.`idpersona` = "+idperson;
-       
-       cnx.openConnectionToMySQL(Identificador);
-       
-       System.out.println(sql);
         
+       
+       cnx.abrirConexionMySQL();
+       
         try 
         {
-          PreparedStatement pstm=(PreparedStatement)connectionToMySQL.conn.prepareStatement(sql);
-          pstm.executeUpdate();
-          JOptionPane.showMessageDialog(null, "El registro se ha creado exitosamente","System Information",JOptionPane.INFORMATION_MESSAGE);
+            sql="UPDATE "+table
+               + " SET cedula = ?,"
+               + "nombre = ?,"
+               + "apellido = ?,"
+               + "fk_tipopersona = ?,"
+               + "pais = ?,"
+               + "ciudad = ?,"
+               + "direccion = ?,"
+               + "telefono = ?,"
+               + "correo = ?,"
+               + "cliente = ?,"
+               + "empleado = ?,"
+               + "fk_sexo = ?"
+               + " WHERE "+table+".idpersona = "+idperson;
+            
+            PreparedStatement pstm=(PreparedStatement)ConexionMySQL.conn.prepareStatement(sql);
+            
+            for (int i = 0; i < data.size(); i++) {
+                pstm.setString(i+1, data.get(i));
+            }
+          
+            pstm.executeUpdate();
+            JOptionPane.showMessageDialog(null, "El registro se ha creado exitosamente","System Information",JOptionPane.INFORMATION_MESSAGE);
         } 
         catch (SQLException e)
         {
             JOptionPane.showMessageDialog(null,"Ocurrio un error al ejecutar la consulta", "¡Error de ejecucion!",JOptionPane.ERROR_MESSAGE);
         }
        
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
     }
     
     public DefaultTableModel getPerson(boolean columns[], String filter){
@@ -157,19 +163,19 @@ public class Person {
         if (columns[11]==true) {personDT.addColumn("FK_SEXO");   query+=" P.fk_sexo,";}       
         if (columns[12]==true) {personDT.addColumn("SEXO");        query+=" G.sexo,";}
         
-        sql= query.substring(0, query.length()-1)+" FROM persona as  P\n" +
+        sql= query.substring(0, query.length()-1)+" FROM "+table+" as  P\n" +
         "INNER JOIN sexo AS G ON G.idsexo = P.fk_sexo\n" +
         "INNER JOIN tipopersona AS TP ON TP.idtipopersona = P.fk_tipopersona\n" +
         "HAVING "+ filter;
         System.out.println(sql);
         
         
-        cnx.openConnectionToMySQL(Identificador);
+        cnx.abrirConexionMySQL();
         
         String data[]=new String[personDT.getColumnCount()];        
         try
         {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
@@ -178,6 +184,8 @@ public class Person {
                         data[i]=res.getString(i+1);                                                    
                     personDT.addRow(data);                   
                 } 
+                
+                res.close();
             }                        
         }
         catch(SQLException e)
@@ -185,7 +193,7 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
         
         return personDT;
     
@@ -198,11 +206,11 @@ public class Person {
         
         sql = "SELECT * FROM `sexo` WHERE 1";
         System.out.println(sql);
-        cnx.openConnectionToMySQL(Identificador);
+        cnx.abrirConexionMySQL();
         
         try
         {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
@@ -216,7 +224,7 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
         
         return model;
      
@@ -228,11 +236,11 @@ public class Person {
         
         sql = "SELECT * FROM `tipopersona` WHERE 1";
         System.out.println(sql);
-        cnx.openConnectionToMySQL(Identificador);
+        cnx.abrirConexionMySQL();
         
         try
         {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
@@ -246,7 +254,7 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
         
         return model;
     }
@@ -259,11 +267,11 @@ public class Person {
         
         sql = "SELECT sexo.idsexo FROM `sexo` WHERE sexo.sexo = '"+gender+"'";
         
-        cnx.openConnectionToMySQL(Identificador);
+        cnx.abrirConexionMySQL();
         
         try
         {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
@@ -277,7 +285,7 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
         return genderIndex;
     }
     
@@ -286,11 +294,11 @@ public class Person {
         
         sql = "SELECT tipopersona.idtipopersona FROM `tipopersona` WHERE tipopersona.tipo = '"+tyPerson+"'";
         
-        cnx.openConnectionToMySQL(Identificador);
+        cnx.abrirConexionMySQL();
         
         try
         {
-            PreparedStatement pstm = (PreparedStatement) connectionToMySQL.conn.prepareStatement(sql);
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
             try (ResultSet res = pstm.executeQuery()) 
             {                            
                 while(res.next())
@@ -304,7 +312,7 @@ public class Person {
             System.out.println(e);
         }
         
-        cnx.closeConnectionToMySQL(Identificador);
+        cnx.cerrarConexionMySQL();
         return tyPersonIndex;
     }
     
