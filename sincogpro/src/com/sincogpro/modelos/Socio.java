@@ -15,10 +15,11 @@ public class Socio {
   private String CODIGO, RAZONSOCIAL, RAZONCOMERCIAL, RUC, CEDULA;
   private String DIRECCION, TELF1, TELF2, EMAIL1, EMAIL2;
   private boolean CREDITO, ACTIVO;
-  private double LIMITECREDITO, DESCUENTO;
-  private int FK_TIPOSOCIO, FK_REGPAGO, FK_REGCOBRO;
+  private double LIMITECREDITO;
+  private int FK_TIPOSOCIO, FK_REGPAGO, FK_REGCOBRO, FK_DESCUENTO;
 
     public Socio() {
+        this.CODIGO ="SC-XXXX";
         this.RAZONSOCIAL = "RAZON SOCIAL O NOMBRE DE LA PERSONA";
         this.RAZONCOMERCIAL = "NOMBRE DE LA EMPRESA";
         this.RUC = "N° RUC O NIT";
@@ -28,10 +29,10 @@ public class Socio {
         this.TELF2 = "0000-0000";
         this.EMAIL1 = "correo1@sincogpro.com";
         this.EMAIL2 = "correo2@sincogpro.com";
-        this.CREDITO = false;
+        this.CREDITO = true;
         this.ACTIVO = true;
         this.LIMITECREDITO = 0.00;
-        this.DESCUENTO = 0.00;
+        this.FK_DESCUENTO = 1;
         this.FK_REGPAGO = 1;
         this.FK_REGCOBRO = 1;
     }
@@ -148,12 +149,12 @@ public class Socio {
         this.LIMITECREDITO = LIMITECREDITO;
     }
 
-    public double getDESCUENTO() {
-        return DESCUENTO;
+    public int getFK_DESCUENTO() {
+        return FK_DESCUENTO;
     }
 
-    public void setDESCUENTO(double DESCUENTO) {
-        this.DESCUENTO = DESCUENTO;
+    public void setFK_DESCUENTO(int FK_DESCUENTO) {
+        this.FK_DESCUENTO = FK_DESCUENTO;
     }
 
     public int getFK_TIPOSOCIO() {
@@ -179,6 +180,27 @@ public class Socio {
     public void setFK_REGCOBRO(int FK_REGCOBRO) {
         this.FK_REGCOBRO = FK_REGCOBRO;
     }
-
+    
+    @Override
+    public String toString(){
+        return "IDSOCIO:\t"+IDSOCIO
+                +"CODIGO:\t"+CODIGO
+                +"RAZONSOCIAL:\t"+RAZONSOCIAL
+                +"RAZONCOMERCIAL:\t"+RAZONCOMERCIAL
+                +"RUC:\t"+RUC
+                +"CEDULA:\t"+CEDULA
+                +"DIRECCION:\t"+DIRECCION
+                +"TELF1:\t"+TELF1
+                +"TELF2:\t"+TELF2
+                +"EMAIL1:\t"+EMAIL1
+                +"EMAIL2:\t"+EMAIL2
+                +"CREDITO:\t"+CREDITO
+                +"LIMITECREDITO:\t"+LIMITECREDITO
+                +"FK_DESCUENTO:\t"+FK_DESCUENTO
+                +"FK_TIPOSOCIO:\t"+FK_TIPOSOCIO
+                +"FK_REGCOBRO:\t"+FK_REGCOBRO
+                +"FK_REGPAGO:\t"+FK_REGPAGO
+                +"ACTIVO:\t"+ACTIVO;
+    }
     
 }

@@ -22,7 +22,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="FichaSocio" alignment="0" max="32767" attributes="0"/>
+          <Component id="FichaSocio" alignment="0" pref="933" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -53,11 +53,11 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="EtiquetaTitulo" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="1" pref="900" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane1" max="32767" attributes="0"/>
+                          <Component id="EtiquetaTitulo" alignment="1" pref="908" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="EtiquetaBusquedaSocio" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -92,7 +92,7 @@
                   <Font name="Tahoma" size="18" style="0"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="TABLA DE DATOS DE PERSONAS REGISTRADAS"/>
+                <Property name="text" type="java.lang.String" value="TABLA DE DATOS DE SOCIOS REGISTRADOS"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="EtiquetaBusquedaSocio">
@@ -164,116 +164,110 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSeparator2" min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel1" alignment="0" min="-2" pref="773" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jLabel1" alignment="0" min="-2" pref="773" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="razonComercialLbl" alignment="0" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="razonComercialLbl" alignment="0" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="cedulaLbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="codigoSocioLbl" max="32767" attributes="0"/>
+                                                  <Component id="razonSocialLbl" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Component id="rucLbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="cedulaTxt" alignment="1" min="-2" pref="553" max="-2" attributes="0"/>
+                                      <Component id="codigoSocioTxt" min="-2" pref="553" max="-2" attributes="0"/>
+                                      <Component id="razonSocialTxt" min="-2" pref="553" max="-2" attributes="0"/>
+                                      <Component id="razonComercialTXt" alignment="1" min="-2" pref="553" max="-2" attributes="0"/>
+                                      <Component id="rucTxt" alignment="1" min="-2" pref="553" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="entidadCmb" min="-2" pref="188" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="tipoSocioLbl" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="tipoSocioCmb" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="direccionLbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="telf1Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="email1Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="creditoChk" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="activoChk" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="direccionTxt" min="-2" pref="553" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="email1Txt" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="telf1Txt" max="32767" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="limiteCreditoLbl" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="limiteCreditoTxt" max="32767" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="divisaDescuentoLbl" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                               <Group type="102" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="cedulaLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                                          <Component id="codigoSocioLbl" max="32767" attributes="0"/>
-                                                          <Component id="razonSocialLbl" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <Component id="rucLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                                                  <Component id="regimenPagoLbl" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="regimenPagoCmb" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="cedulaTxt" alignment="1" min="-2" pref="553" max="-2" attributes="0"/>
-                                              <Component id="codigoSocioTxt" min="-2" pref="553" max="-2" attributes="0"/>
-                                              <Component id="razonSocialTxt" min="-2" pref="553" max="-2" attributes="0"/>
-                                              <Component id="razonComercialTXt" alignment="1" min="-2" pref="553" max="-2" attributes="0"/>
-                                              <Component id="rucTxt" alignment="1" min="-2" pref="553" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="telf2Lbl" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="telf2Txt" min="-2" pref="260" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="email2Lbl" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="email2Txt" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="descuentoLbl" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="descuentoCmb" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="regimenCobroLbl" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="regimenCobroCmb" max="32767" attributes="0"/>
+                                              </Group>
                                           </Group>
                                       </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="direccionLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="telf1Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="email1Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="creditoChk" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="activoChk" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="direccionTxt" min="-2" pref="553" max="-2" attributes="0"/>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Group type="103" groupAlignment="1" attributes="0">
-                                                      <Component id="email1Txt" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="telf1Txt" max="32767" attributes="0"/>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="limiteCreditoLbl" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Component id="limiteCreditoTxt" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" attributes="0">
-                                                          <Component id="regimenPagoLbl" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Component id="regimenPagoCmb" max="32767" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Group type="102" attributes="0">
-                                                          <Component id="telf2Lbl" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Component id="telf2Txt" min="-2" pref="260" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" attributes="0">
-                                                          <Component id="email2Lbl" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Component id="email2Txt" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" attributes="0">
-                                                          <Component id="descuentoLbl" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Component id="descuentoTxt" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" attributes="0">
-                                                          <Component id="regimenCobroLbl" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Component id="regimenCobroCmb" max="32767" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="crearBtn" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="editarBtn" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="cancelarBtn" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="guardarBtn" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="crearBtn" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="editarBtn" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="cancelarBtn" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="guardarBtn" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="161" max="-2" attributes="0"/>
-                              <Component id="personaRbt" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="empresaRbt" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="clienteChk" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="proveedorChk" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="empleadoChk" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="entidadLbl" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="6" max="32767" attributes="0"/>
-                      <Component id="jSeparator1" min="-2" pref="77" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jSeparator1" min="-2" pref="53" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -287,15 +281,14 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="personaRbt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="empresaRbt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="clienteChk" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="proveedorChk" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="empleadoChk" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="entidadLbl" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="entidadCmb" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="tipoSocioLbl" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="tipoSocioCmb" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="codigoSocioLbl" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="codigoSocioTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
@@ -345,7 +338,8 @@
                                   <Component id="limiteCreditoTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="limiteCreditoLbl" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="descuentoLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="descuentoTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="descuentoCmb" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="divisaDescuentoLbl" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -362,7 +356,7 @@
                                   <Component id="cancelarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="guardarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="28" max="32767" attributes="0"/>
+                              <EmptySpace pref="17" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -409,58 +403,6 @@
             <Component class="javax.swing.JTextField" name="codigoSocioTxt">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="personaRbt">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="entidadGrupo"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="PERSONA"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="personaRbtActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="empresaRbt">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="entidadGrupo"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="EMPRESA"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JCheckBox" name="clienteChk">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="CLIENTE"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JCheckBox" name="proveedorChk">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="PROVEEDOR"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="proveedorChkActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JCheckBox" name="empleadoChk">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="EMPLEADO"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -628,14 +570,6 @@
                 <Property name="text" type="java.lang.String" value="DESCUENTO:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="descuentoTxt">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-            </Component>
             <Component class="javax.swing.JLabel" name="regimenPagoLbl">
               <Properties>
                 <Property name="text" type="java.lang.String" value="REG PAGO:"/>
@@ -717,6 +651,54 @@
                 <Property name="text" type="java.lang.String" value="GUARDAR"/>
               </Properties>
               <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="descuentoCmb">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="divisaDescuentoLbl">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="USD"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="entidadLbl">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="ENTIDAD:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="entidadCmb">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="tipoSocioLbl">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="TIPOSOCIO:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="tipoSocioCmb">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
             </Component>
