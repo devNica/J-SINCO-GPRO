@@ -13,7 +13,11 @@ public class RegimenCobro {
     
     private int IDREGCOBRO;
     private String REGIMENCOBRO;
-
+    
+    public RegimenCobro(){
+        this.IDREGCOBRO = 1;
+    }
+    
     public int getIDREGCOBRO() {
         return IDREGCOBRO;
     }

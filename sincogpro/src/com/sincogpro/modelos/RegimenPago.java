@@ -12,7 +12,11 @@ package com.sincogpro.modelos;
 public class RegimenPago {
     private int IDREGPAGO;
     private String REGIMENPAGO;
-
+    
+    public RegimenPago(){
+        this.IDREGPAGO = 1;
+    }
+    
     public int getIDREGPAGO() {
         return IDREGPAGO;
     }

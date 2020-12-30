@@ -9,9 +9,11 @@ import com.sincogpro.administration.SocioPanel;
 import com.sincogpro.consultas.ConsultaModeloSocio;
 import com.sincogpro.controlador.ControladorContenedor;
 import com.sincogpro.controlador.ControladorSocio;
+import com.sincogpro.modelos.Descuento;
 import com.sincogpro.modelos.RegimenCobro;
 import com.sincogpro.modelos.RegimenPago;
 import com.sincogpro.modelos.Socio;
+import com.sincogpro.modelos.TipoSocio;
 
 /**
  *
@@ -19,22 +21,21 @@ import com.sincogpro.modelos.Socio;
  */
 public class FrmPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Enviroment
-     */
-    
     Socio modeloSocio = new Socio();
     SocioPanel sociopanel = new SocioPanel();
     ConsultaModeloSocio consultaSocio = new ConsultaModeloSocio();
     RegimenCobro regcobro = new RegimenCobro();
     RegimenPago regpago = new RegimenPago();
+    Descuento descuento = new Descuento();
+    TipoSocio tiposocio = new TipoSocio();
+    
     ControladorContenedor ctrlContenedor;
     ControladorSocio ctrlSocio;
     
     public FrmPrincipal() {
         initComponents();
         ctrlContenedor = new ControladorContenedor(this, sociopanel);
-        ctrlSocio = new ControladorSocio(modeloSocio, consultaSocio, sociopanel, regcobro, regpago){} ;
+        ctrlSocio = new ControladorSocio(modeloSocio, consultaSocio, sociopanel, regcobro, regpago, descuento, tiposocio){} ;
        
         
     }

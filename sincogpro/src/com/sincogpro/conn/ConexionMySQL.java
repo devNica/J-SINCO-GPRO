@@ -22,6 +22,7 @@ public class ConexionMySQL {
     private final String USUARIO = Credenciales.USERNAME;
     private final String BASEDATOS = Credenciales.DATABASE;
     private final String URL = Credenciales.URL;
+    private boolean ERROR;
     
     public  void abrirConexionMySQL()
     {        
@@ -40,8 +41,10 @@ public class ConexionMySQL {
                         "No se ha logrado realizar la conexion al servidor de bases de datos",
                         "Error de conexion...",
             JOptionPane.ERROR_MESSAGE);
+            setERROR(true);
            
-        }    
+        }
+        setERROR(false);
     }
     
     //CERRAR LA CONEXION A LA BASE DE DATOS
@@ -56,5 +59,13 @@ public class ConexionMySQL {
         {
             System.out.println(e);
         }
+    }
+
+    public boolean isERROR() {
+        return ERROR;
+    }
+
+    public void setERROR(boolean ERROR) {
+        this.ERROR = ERROR;
     }
 }

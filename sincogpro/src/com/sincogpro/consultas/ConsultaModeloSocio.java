@@ -25,6 +25,37 @@ public class ConsultaModeloSocio{
     ConexionMySQL cnx = new ConexionMySQL();
     Socio MS = new Socio();
     
+    public String calcularIdSocio(){
+    
+        sql = "SELECT (MAX(IDSOCIO)+1) AS IDSOCIO FROM "+TABLA+" WHERE 1";
+        String IDSOCIO=null;
+        
+        cnx.abrirConexionMySQL();
+        
+        try
+        {
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
+            try (ResultSet res = pstm.executeQuery()) 
+            {                            
+                while(res.next())
+                {                                    
+                   IDSOCIO = res.getString(1);                  
+                } 
+                
+                res.close();
+            }                        
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        
+        cnx.cerrarConexionMySQL();
+        
+        return IDSOCIO;
+        
+    }
+    
     public String calcularCodigoSocio(){
         
         sql = "SELECT FN_CALCULARCODIGOSOCIO()";
@@ -63,9 +94,10 @@ public class ConsultaModeloSocio{
         if (columns[0]==true) {TablaSocio.addColumn("#");       query+=" S.IDSOCIO,";}
         if (columns[1]==true) {TablaSocio.addColumn("CODIGO");       query+=" S.CODIGO,";}
         if (columns[2]==true) {TablaSocio.addColumn("NOMBRE");         query+=" S.RAZONSOCIAL,";}
-        if (columns[3]==true) {TablaSocio.addColumn("COMERCIAL");        query+=" S.RAZONCOMERCIAL,";}
-        if (columns[4]==true) {TablaSocio.addColumn("TIPO");        query+=" TP.DESCRIPCION,";}
-        if (columns[5]==true) {TablaSocio.addColumn("ESTADO");        query+=" IF(S.ACTIVO = 1, 'ACTIVO', 'INACTIVO') AS ESTADO,";} 
+        if (columns[3]==true) {TablaSocio.addColumn("RAZON COMERCIAL");        query+=" S.RAZONCOMERCIAL,";}
+        if (columns[4]==true) {TablaSocio.addColumn("TELF");        query+=" IF(S.TELF1 = '(505)-', S.TELF2, IF(S.TELF2 = '(505)-', S.TELF1, S.TELF2)) AS TELF,";}
+        if (columns[5]==true) {TablaSocio.addColumn("TIPO");        query+=" TP.DESCRIPCION,";}
+        if (columns[6]==true) {TablaSocio.addColumn("ESTADO");        query+=" IF(S.ACTIVO = 1, 'ACTIVO', 'INACTIVO') AS ESTADO,";} 
         
         sql= query.substring(0, query.length()-1)+" FROM "+TABLA+" as  S\n" +
         "INNER JOIN tiposocio AS TP ON TP.IDTIPOSOCIO = S.FK_TIPOSOCIO\n" +
@@ -101,6 +133,49 @@ public class ConsultaModeloSocio{
         
         return TablaSocio;
     
+    }
+    
+    public void crearSocio(ArrayList<String> data){
+        cnx.abrirConexionMySQL();
+
+        try 
+        {
+            sql="INSERT INTO "+TABLA
+                + "(IDSOCIO, "
+                + "CODIGO, "
+                + "RAZONSOCIAL,"
+                + "RAZONCOMERCIAL,"
+                + "RUC,"
+                + "CEDULA,"
+                + "DIRECCION,"
+                + "TELF1,"
+                + "TELF2,"
+                + "EMAIL1,"
+                + "EMAIL2,"
+                + "CREDITO,"
+                + "LIMITECREDITO,"
+                + "FK_DESCUENTO,"
+                + "FK_TIPOSOCIO,"
+                + "FK_REGPAGO,"
+                + "FK_REGCOBRO,"
+                + "ACTIVO)"
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+            PreparedStatement pstm=(PreparedStatement)ConexionMySQL.conn.prepareStatement(sql);
+
+            for (int i = 0; i < data.size(); i++) {
+                pstm.setString(i+1, data.get(i));
+            }
+
+            pstm.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro creado con exito","System Information",JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (SQLException e)
+        {
+            JOptionPane.showMessageDialog(null,"Error:\n"+e, "¡Error de ejecucion!",JOptionPane.ERROR_MESSAGE);
+        }
+
+        cnx.cerrarConexionMySQL();
     }
     
     public void editarSocio(ArrayList<String> data){
@@ -141,7 +216,7 @@ public class ConsultaModeloSocio{
         } 
         catch (SQLException e)
         {
-            JOptionPane.showMessageDialog(null,"Error al ejecutar la consulta", "¡Error de ejecucion!",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Error:\n"+e, "¡Error de ejecucion!",JOptionPane.ERROR_MESSAGE);
         }
        
         cnx.cerrarConexionMySQL();
