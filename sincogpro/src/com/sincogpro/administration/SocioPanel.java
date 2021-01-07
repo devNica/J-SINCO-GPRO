@@ -13,10 +13,6 @@ import java.util.regex.Pattern;
  */
 public class SocioPanel extends javax.swing.JPanel {
     
-   
-    Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-    
     public SocioPanel() {
         initComponents();
     }
@@ -33,6 +29,9 @@ public class SocioPanel extends javax.swing.JPanel {
 
         consultaModeloSocio1 = new com.sincogpro.consultas.ConsultaModeloSocio();
         entidadGrupo = new javax.swing.ButtonGroup();
+        menuEmergente = new javax.swing.JPopupMenu();
+        menu = new javax.swing.JMenu();
+        editarSocio = new javax.swing.JMenuItem();
         FichaSocio = new javax.swing.JTabbedPane();
         ListaSocioPanel = new javax.swing.JPanel();
         EtiquetaTitulo = new javax.swing.JLabel();
@@ -84,6 +83,15 @@ public class SocioPanel extends javax.swing.JPanel {
         tipoSocioLbl = new javax.swing.JLabel();
         tipoSocioCmb = new javax.swing.JComboBox<>();
 
+        menu.setText("opciones");
+
+        editarSocio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sincogpro/stf/edit16.png"))); // NOI18N
+        editarSocio.setText("editarsocio");
+        editarSocio.setToolTipText("");
+        menu.add(editarSocio);
+
+        menuEmergente.add(menu);
+
         ListaSocioPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         EtiquetaTitulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -122,6 +130,9 @@ public class SocioPanel extends javax.swing.JPanel {
 
             }
         ));
+        tablaSocioDT.setComponentPopupMenu(menuEmergente);
+        tablaSocioDT.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tablaSocioDT.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tablaSocioDT);
 
         javax.swing.GroupLayout ListaSocioPanelLayout = new javax.swing.GroupLayout(ListaSocioPanel);
@@ -452,7 +463,7 @@ public class SocioPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(FichaSocio, javax.swing.GroupLayout.DEFAULT_SIZE, 933, Short.MAX_VALUE)
+            .addComponent(FichaSocio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,7 +508,7 @@ public class SocioPanel extends javax.swing.JPanel {
     public javax.swing.JTextField CampoBusquedaSocio;
     private javax.swing.JLabel EtiquetaBusquedaSocio;
     private javax.swing.JLabel EtiquetaTitulo;
-    private javax.swing.JTabbedPane FichaSocio;
+    public javax.swing.JTabbedPane FichaSocio;
     private javax.swing.JPanel ListaSocioPanel;
     private javax.swing.JPanel RegistroSocioPanel;
     public javax.swing.JCheckBox activoChk;
@@ -515,6 +526,7 @@ public class SocioPanel extends javax.swing.JPanel {
     public javax.swing.JTextField direccionTxt;
     private javax.swing.JLabel divisaDescuentoLbl;
     public javax.swing.JButton editarBtn;
+    public javax.swing.JMenuItem editarSocio;
     private javax.swing.JLabel email1Lbl;
     public javax.swing.JTextField email1Txt;
     private javax.swing.JLabel email2Lbl;
@@ -529,6 +541,8 @@ public class SocioPanel extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel limiteCreditoLbl;
     public javax.swing.JTextField limiteCreditoTxt;
+    private javax.swing.JMenu menu;
+    private javax.swing.JPopupMenu menuEmergente;
     private javax.swing.JLabel razonComercialLbl;
     public javax.swing.JTextField razonComercialTXt;
     private javax.swing.JLabel razonSocialLbl;

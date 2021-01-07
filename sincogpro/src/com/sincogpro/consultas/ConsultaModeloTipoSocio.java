@@ -20,6 +20,36 @@ public class ConsultaModeloTipoSocio {
     private final String TABLA = "tiposocio";
     ConexionMySQL cnx = new ConexionMySQL();
     
+    public String tipoSocio(int idsocio){
+        
+        sql = "SELECT * FROM `"+TABLA+"` WHERE "+TABLA+".IDTIPOSOCIO = ?";
+        String descripcion = null;
+        cnx.abrirConexionMySQL();
+        
+        System.out.println(sql);
+        try
+        {
+            PreparedStatement pstm = (PreparedStatement) ConexionMySQL.conn.prepareStatement(sql);
+            pstm.setInt(1, idsocio);
+            
+            try (ResultSet res = pstm.executeQuery()) 
+            {                            
+                while(res.next())
+                {                                    
+                   descripcion = res.getString("DESCRIPCION"); 
+                }
+            }                        
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        
+        cnx.cerrarConexionMySQL();
+        
+        return descripcion;
+    }
+    
     public DefaultComboBoxModel itemsEntidad(){
          
         DefaultComboBoxModel model = new DefaultComboBoxModel();

@@ -8,12 +8,8 @@ package com.sincogpro.contenedor;
 import com.sincogpro.administration.SocioPanel;
 import com.sincogpro.consultas.ConsultaModeloSocio;
 import com.sincogpro.controlador.ControladorContenedor;
-import com.sincogpro.controlador.ControladorSocio;
-import com.sincogpro.modelos.Descuento;
-import com.sincogpro.modelos.RegimenCobro;
-import com.sincogpro.modelos.RegimenPago;
+import com.sincogpro.controlador.CRUDSOCIO;
 import com.sincogpro.modelos.Socio;
-import com.sincogpro.modelos.TipoSocio;
 
 /**
  *
@@ -24,19 +20,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     Socio modeloSocio = new Socio();
     SocioPanel sociopanel = new SocioPanel();
     ConsultaModeloSocio consultaSocio = new ConsultaModeloSocio();
-    RegimenCobro regcobro = new RegimenCobro();
-    RegimenPago regpago = new RegimenPago();
-    Descuento descuento = new Descuento();
-    TipoSocio tiposocio = new TipoSocio();
     
     ControladorContenedor ctrlContenedor;
-    ControladorSocio ctrlSocio;
+    CRUDSOCIO nuevoSocio;
     
     public FrmPrincipal() {
         initComponents();
         ctrlContenedor = new ControladorContenedor(this, sociopanel);
-        ctrlSocio = new ControladorSocio(modeloSocio, consultaSocio, sociopanel, regcobro, regpago, descuento, tiposocio){} ;
-       
+        nuevoSocio = new CRUDSOCIO(modeloSocio, consultaSocio, sociopanel){} ;
         
     }
     
@@ -98,7 +89,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         PLIF.setBackground(new java.awt.Color(255, 255, 255));
 
         licenseLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        licenseLabel.setText("sincogpro is developed by Lucas Andres Marsell & Ricardo Castellon");
+        licenseLabel.setText("sincogpro is developed by Lucas Andres Marsell (QueryBirdCode)");
         licenseLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 255), 2));
 
         javax.swing.GroupLayout PLIFLayout = new javax.swing.GroupLayout(PLIF);
@@ -132,11 +123,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelContenedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1044, Short.MAX_VALUE)
+            .addComponent(PanelContenedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
+            .addComponent(PanelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
