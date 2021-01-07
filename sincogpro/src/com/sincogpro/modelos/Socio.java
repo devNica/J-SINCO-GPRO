@@ -36,6 +36,37 @@ public class Socio {
         this.FK_REGPAGO = 1;
         this.FK_REGCOBRO = 1;
     }
+
+    public Socio(int IDSOCIO, String CODIGO, 
+            String RAZONSOCIAL, 
+            String RAZONCOMERCIAL, 
+            String RUC, String CEDULA, String DIRECCION, 
+            String TELF1, String TELF2, String EMAIL1, 
+            String EMAIL2, boolean CREDITO, boolean ACTIVO, 
+            double LIMITECREDITO, int FK_TIPOSOCIO, 
+            int FK_REGPAGO, int FK_REGCOBRO, int FK_DESCUENTO) {
+        
+        this.IDSOCIO = IDSOCIO;
+        this.CODIGO = CODIGO;
+        this.RAZONSOCIAL = RAZONSOCIAL;
+        this.RAZONCOMERCIAL = RAZONCOMERCIAL;
+        this.RUC = RUC;
+        this.CEDULA = CEDULA;
+        this.DIRECCION = DIRECCION;
+        this.TELF1 = TELF1;
+        this.TELF2 = TELF2;
+        this.EMAIL1 = EMAIL1;
+        this.EMAIL2 = EMAIL2;
+        this.CREDITO = CREDITO;
+        this.ACTIVO = ACTIVO;
+        this.LIMITECREDITO = LIMITECREDITO;
+        this.FK_TIPOSOCIO = FK_TIPOSOCIO;
+        this.FK_REGPAGO = FK_REGPAGO;
+        this.FK_REGCOBRO = FK_REGCOBRO;
+        this.FK_DESCUENTO = FK_DESCUENTO;
+    }
+    
+                
     
     public int getIDSOCIO() {
         return IDSOCIO;
@@ -183,24 +214,24 @@ public class Socio {
     
     @Override
     public String toString(){
-        return "IDSOCIO:\t"+IDSOCIO
-                +"CODIGO:\t"+CODIGO
-                +"RAZONSOCIAL:\t"+RAZONSOCIAL
-                +"RAZONCOMERCIAL:\t"+RAZONCOMERCIAL
-                +"RUC:\t"+RUC
-                +"CEDULA:\t"+CEDULA
-                +"DIRECCION:\t"+DIRECCION
-                +"TELF1:\t"+TELF1
-                +"TELF2:\t"+TELF2
-                +"EMAIL1:\t"+EMAIL1
-                +"EMAIL2:\t"+EMAIL2
-                +"CREDITO:\t"+CREDITO
-                +"LIMITECREDITO:\t"+LIMITECREDITO
-                +"FK_DESCUENTO:\t"+FK_DESCUENTO
-                +"FK_TIPOSOCIO:\t"+FK_TIPOSOCIO
-                +"FK_REGCOBRO:\t"+FK_REGCOBRO
-                +"FK_REGPAGO:\t"+FK_REGPAGO
-                +"ACTIVO:\t"+ACTIVO;
+        return "\nIDSOCIO: "+IDSOCIO+"\n"
+                +"CODIGO: "+CODIGO+"\n"
+                +"RAZONSOCIAL: "+RAZONSOCIAL+"\n"
+                +"RAZONCOMERCIAL: "+RAZONCOMERCIAL+"\n"
+                +"RUC: "+RUC+"\n"
+                +"CEDULA: "+CEDULA+"\n"
+                +"DIRECCION: "+DIRECCION+"\n"
+                +"TELF1: "+TELF1+"\n"
+                +"TELF2: "+TELF2+"\n"
+                +"EMAIL1: "+EMAIL1+"\n"
+                +"EMAIL2: "+EMAIL2+"\n"
+                +"CREDITO: "+CREDITO+"\n"
+                +"LIMITECREDITO: "+LIMITECREDITO+"\n"
+                +"FK_DESCUENTO: "+FK_DESCUENTO+"\n"
+                +"FK_TIPOSOCIO: "+FK_TIPOSOCIO+"\n"
+                +"FK_REGCOBRO: "+FK_REGCOBRO+"\n"
+                +"FK_REGPAGO: "+FK_REGPAGO+"\n"
+                +"ACTIVO: "+ACTIVO+"\n";
     }
     
 }

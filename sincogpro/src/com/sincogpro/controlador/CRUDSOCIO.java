@@ -33,16 +33,15 @@ import javax.swing.SwingConstants;
  *
  * @author Alejandro Gonzalez
  */
-public class ControladorSocio{
+public class CRUDSOCIO{
     
     private final SocioPanel SP;
     private final Socio MS;
     private final ConsultaModeloSocio CS;
-    private final RegimenCobro RC;
-    private final RegimenPago RP;
-    private final Descuento DE;
-    private final TipoSocio TS;
-    
+    private final RegimenCobro RC = new RegimenCobro();
+    private final RegimenPago RP = new RegimenPago();
+    private final Descuento DE = new Descuento();
+    private final TipoSocio TS = new TipoSocio();
     
     EventosTeclado EventoTeclado = new EventosTeclado();
     EventosMouse EventoMouse = new EventosMouse();
@@ -54,18 +53,19 @@ public class ControladorSocio{
                 .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     
-    public ControladorSocio(Socio MS, ConsultaModeloSocio CS, SocioPanel SP, RegimenCobro RC, RegimenPago RP, Descuento DE, TipoSocio TS){
+    String IDSOCIO=null;
+    boolean EDICION=false;
+    
+    public CRUDSOCIO(Socio MS, ConsultaModeloSocio CS, SocioPanel SP){
         this.MS = MS;
         this.CS = CS;
         this.SP = SP;
-        this.RC = RC;
-        this.RP = RP;
-        this.DE = DE;
-        this.TS = TS;
         
         /*REGISTRAR CAMPOS DE LA TABLA DE BUSQUEDA*/
         SP.CampoBusquedaSocio.addKeyListener(EventoTeclado);
         SP.CampoBusquedaSocio.addMouseListener(EventoMouse);
+        //SP.tablaSocioDT.addMouseListener(EventoMouse);
+        //SP.tablaSocioDT.getSelectionModel().addListSelectionListener(EventoTabla);
         SP.tablaSocioDT.addMouseListener(EventoMouse);
         
         /*REGISTRAR CAMPOS DEL FORMULARIO*/
@@ -88,6 +88,8 @@ public class ControladorSocio{
         SP.limiteCreditoTxt.addKeyListener(EventoTeclado);
         SP.descuentoCmb.addItemListener(EventoCombo);
         
+        SP.editarSocio.addMouseListener(EventoMouse);
+        
         /*REGISTRAR BOTONES*/
         SP.crearBtn.addMouseListener(EventoMouse);
         SP.editarBtn.addMouseListener(EventoMouse);
@@ -95,6 +97,7 @@ public class ControladorSocio{
         SP.guardarBtn.addMouseListener(EventoMouse);
         
         mostrarSocios(1);
+        //seleccionarDatosFilaTabla();
         /*CARGAR ITEMS EN LOS COMBOBOX*/
         SP.regimenCobroCmb.setModel(regimen.itemsRegCobro());
         SP.regimenPagoCmb.setModel(regimen.itemsRegPago());
@@ -103,14 +106,17 @@ public class ControladorSocio{
         SP.tipoSocioCmb.setModel(tiposocio.itemsTipoSocio(TS.getENTIDAD()));
         
         /*INICIAR EL FORMULAIRO*/
-        controlFormulario(1);
+        controlFormulario("INICIALIZAR-FORMULARIO");
+        
+        
+        
     }
     
-    private void controlFormulario(int opc){
+    private void controlFormulario(String opc){
         
         switch(opc){
-            case 1:
-                accesoCampos(false);
+            case "INICIALIZAR-FORMULARIO":
+                accesoCampos(false, 0);
                 inicioCampos();
                 SP.crearBtn.setEnabled(true);
                 SP.editarBtn.setEnabled(false);
@@ -119,8 +125,8 @@ public class ControladorSocio{
                 
             break;
             
-            case 2:
-                accesoCampos(true);
+            case "INICIAR-CREACION":
+                accesoCampos(true, 0);
                 limpiarCampos();
                 SP.codigoSocioTxt.setText(CS.calcularCodigoSocio());
                 SP.crearBtn.setEnabled(false);
@@ -128,11 +134,7 @@ public class ControladorSocio{
                 SP.guardarBtn.setEnabled(true);
             break;
             
-            case 3:
-                guardarInformacionCampos();
-            break;
-            
-            case 4:
+            case "CREAR":
                 MS.setIDSOCIO(Integer.parseInt(CS.calcularIdSocio()));
                 crearNuevoSocio();
                 reestablecerSocio();
@@ -140,18 +142,39 @@ public class ControladorSocio{
                 SP.codigoSocioTxt.setText(CS.calcularCodigoSocio());
             break;
             
+            case "INICIAR-EDICION":
+                CS.obtenerSocio(IDSOCIO, MS, RC, RP, TS, DE);
+                establecerCampos();
+                SP.FichaSocio.setSelectedIndex(1);
+                SP.crearBtn.setEnabled(false);
+                SP.editarBtn.setEnabled(true);
+            break;
+            
+            case "HABILITAR-EDICION-CAMPOS":
+                SP.editarBtn.setEnabled(false);
+                SP.cancelarBtn.setEnabled(true);
+                SP.guardarBtn.setEnabled(true);
+                accesoCampos(true, 1);
+            break;
+            
+            case "EDITAR":
+                edicionSocio();
+                //reestablecerSocio();
+                //limpiarCampos();
+                controlFormulario("INICIALIZAR-FORMULARIO");
+            break;
+            
         }
         
     }
     
     
-    private void accesoCampos(boolean acceso){
+    private void accesoCampos(boolean acceso, int opc){
         
         SP.entidadCmb.setEnabled(acceso);
         SP.tipoSocioCmb.setEnabled(acceso);
         SP.codigoSocioTxt.setEnabled(acceso);
         SP.codigoSocioTxt.setEditable(false);
-        SP.limiteCreditoTxt.setEnabled(acceso);
         SP.razonSocialTxt.setEnabled(acceso);
         SP.razonComercialTXt.setEnabled(acceso);
         SP.cedulaTxt.setEnabled(acceso);
@@ -161,9 +184,15 @@ public class ControladorSocio{
         SP.telf2Txt.setEnabled(acceso);
         SP.email1Txt.setEnabled(acceso);
         SP.email2Txt.setEnabled(acceso);
-        
         SP.activoChk.setEnabled(acceso);
         SP.creditoChk.setEnabled(acceso);
+        
+        if(opc<1){
+            SP.limiteCreditoTxt.setEnabled(acceso);
+        }
+        else{
+            SP.limiteCreditoTxt.setEnabled(MS.isCREDITO());
+        }
         
         SP.regimenCobroCmb.setEnabled(acceso);
         SP.regimenPagoCmb.setEnabled(acceso);
@@ -213,6 +242,38 @@ public class ControladorSocio{
         SP.regimenPagoCmb.setSelectedIndex(0);
     }
     
+    private void establecerCampos(){
+        SP.codigoSocioTxt.setText(MS.getCODIGO());
+        SP.razonSocialTxt.setText(MS.getRAZONSOCIAL());
+        SP.razonComercialTXt.setText(MS.getRAZONCOMERCIAL());
+        SP.cedulaTxt.setText(MS.getCEDULA());
+        SP.rucTxt.setText(MS.getRUC());
+        SP.direccionTxt.setText(MS.getDIRECCION());
+        SP.telf1Txt.setText(MS.getTELF1());
+        SP.telf2Txt.setText(MS.getTELF2());
+        SP.email1Txt.setText(MS.getEMAIL1());
+        SP.email2Txt.setText(MS.getEMAIL2());
+        SP.creditoChk.setSelected(MS.isCREDITO());
+        SP.limiteCreditoTxt.setText(String.valueOf(MS.getLIMITECREDITO()));
+        SP.activoChk.setSelected(MS.isACTIVO());
+        
+        SP.descuentoCmb.setSelectedIndex(MS.getFK_DESCUENTO()-1);        
+        SP.regimenCobroCmb.setSelectedIndex(MS.getFK_REGCOBRO()-1);
+        SP.regimenPagoCmb.setSelectedIndex(MS.getFK_REGPAGO()-1);
+        
+        if(MS.getFK_TIPOSOCIO() == 1 || MS.getFK_TIPOSOCIO() == 4 || MS.getFK_TIPOSOCIO() == 5 || MS.getFK_TIPOSOCIO() == 7 || MS.getFK_TIPOSOCIO() == 8){
+            SP.entidadCmb.setSelectedIndex(0);
+            SP.tipoSocioCmb.setModel(tiposocio.itemsTipoSocio(SP.entidadCmb.getSelectedItem().toString()));
+            SP.tipoSocioCmb.setSelectedItem(tiposocio.tipoSocio(MS.getFK_TIPOSOCIO()));
+        }
+        else if(MS.getFK_TIPOSOCIO() == 2 || MS.getFK_TIPOSOCIO() == 3 || MS.getFK_TIPOSOCIO() == 6){
+            SP.entidadCmb.setSelectedIndex(1);
+            SP.tipoSocioCmb.setModel(tiposocio.itemsTipoSocio(SP.entidadCmb.getSelectedItem().toString()));
+            SP.tipoSocioCmb.setSelectedItem(tiposocio.tipoSocio(MS.getFK_TIPOSOCIO()));
+        }
+    }
+    
+    
     private boolean revisarFormatosCorreos(String email1, String email2){
         
         boolean revision = false;
@@ -238,7 +299,7 @@ public class ControladorSocio{
        
     }
     
-    private void guardarInformacionCampos(){
+    private void guardarInformacionCampos(boolean opc){
         
         String direccion, razoncomercial, cedula, ruc, telf1, telf2;
         boolean revisioncorreo;
@@ -246,8 +307,10 @@ public class ControladorSocio{
         razoncomercial = SP.razonComercialTXt.getText().equals("") ? "-" : SP.razonComercialTXt.getText().trim();
         cedula = SP.cedulaTxt.getText().equals("") ? "-" : SP.cedulaTxt.getText().trim();
         ruc = SP.rucTxt.getText().equals("") ? "-" : SP.rucTxt.getText().trim();
-        telf1 = SP.telf1Txt.getText().equals("0000-0000") ? "-" : SP.telf1Txt.getText().trim();
-        telf2 = SP.telf2Txt.getText().equals("0000-0000") ? "-" : SP.telf2Txt.getText().trim();
+        telf1 = SP.telf1Txt.getText().equals("0000-0000") ? "(505)-0000-0000" : "(505)-"+SP.telf1Txt.getText().trim();
+        telf2 = SP.telf2Txt.getText().equals("0000-0000") ? "(505)-0000-0000" : "(505)-"+SP.telf2Txt.getText().trim();
+        
+        System.out.println("telf1: "+telf1+" telf2: "+telf2);
         
         revisioncorreo = revisarFormatosCorreos(SP.email1Txt.getText().trim(), SP.email2Txt.getText().trim());
         
@@ -260,14 +323,14 @@ public class ControladorSocio{
         else{
             
             if(revisioncorreo){
-            MS.setCODIGO(CS.calcularCodigoSocio());
+            
             MS.setRAZONCOMERCIAL(razoncomercial);
             MS.setRAZONSOCIAL(SP.razonSocialTxt.getText().trim());
             MS.setCEDULA(cedula);
             MS.setRUC(ruc);
             MS.setDIRECCION(direccion);
-            MS.setTELF1("(505)-"+telf1);
-            MS.setTELF2("(505)-"+telf2);
+            MS.setTELF1(telf1);
+            MS.setTELF2(telf2);
             MS.setEMAIL1(SP.email1Txt.getText());
             MS.setEMAIL2(SP.email2Txt.getText());
             MS.setCREDITO(SP.creditoChk.isSelected());
@@ -277,9 +340,15 @@ public class ControladorSocio{
             MS.setFK_REGCOBRO(RC.getIDREGCOBRO());
             MS.setFK_REGPAGO(RP.getIDREGPAGO());
             MS.setFK_TIPOSOCIO(TS.getIDTIPOSOCIO());
-            /*EL FK_TIPO_SOCIO SE ESTABLECE EN LA FUNCION
-            EVALUAR TIPOSOCIO*/
-            controlFormulario(4);
+            
+            if(opc){
+                controlFormulario("EDITAR");
+            }
+            else{
+                controlFormulario("CREAR");
+                MS.setCODIGO(CS.calcularCodigoSocio());
+            }
+            
         
             }
             else{
@@ -297,9 +366,9 @@ public class ControladorSocio{
     
     public final void mostrarSocios(int opc){
         
-        boolean[] columns= new boolean[7];
+        boolean[] columns= new boolean[8];
         columns[0]=columns[1]=columns[2]=columns[3]=true;
-        columns[4]=columns[5]=columns[6]=true;
+        columns[4]=columns[5]=columns[6]=columns[7]=true;
         
         String filter;
         
@@ -313,6 +382,8 @@ public class ControladorSocio{
         SP.tablaSocioDT.setDefaultRenderer(Object.class, rr);
         rr.setHorizontalAlignment(SwingConstants.CENTER);
         SP.tablaSocioDT.getColumnModel().getColumn(0).setCellRenderer(rr);  
+        
+        
     }
     
     private void evaluarTipoSocio(){
@@ -390,7 +461,6 @@ public class ControladorSocio{
     
     private void edicionSocio(){
         ArrayList<String> socio = new ArrayList<>();
-        socio.add(MS.getCODIGO());
         socio.add(MS.getRAZONSOCIAL());
         socio.add(MS.getRAZONCOMERCIAL());
         socio.add(MS.getRUC());
@@ -400,12 +470,15 @@ public class ControladorSocio{
         socio.add(MS.getTELF2());
         socio.add(MS.getEMAIL1());
         socio.add(MS.getEMAIL2());
+        if(MS.isCREDITO()) socio.add("1");
+        else socio.add("0");
         socio.add(String.valueOf(MS.getLIMITECREDITO()));
         socio.add(String.valueOf(MS.getFK_DESCUENTO()));
         socio.add(String.valueOf(MS.getFK_TIPOSOCIO()));
         socio.add(String.valueOf(MS.getFK_REGPAGO()));
         socio.add(String.valueOf(MS.getFK_REGCOBRO()));
-        socio.add(String.valueOf(MS.isACTIVO()));
+        if(MS.isACTIVO()) socio.add("1");
+        else socio.add("0");
         socio.add(String.valueOf(MS.getIDSOCIO()));
         
         CS.editarSocio(socio);
@@ -453,20 +526,26 @@ public class ControladorSocio{
                 limpiarCampoBusqueda();
             }
             
-            
         }
         
         @Override
         public void mouseReleased(MouseEvent e) {
             
-            if(e.getSource() == SP.crearBtn){
-                controlFormulario(2);
+            if(e.getSource() == SP.crearBtn && SP.crearBtn.isEnabled()){
+                EDICION = false;
+                controlFormulario("INICIAR-CREACION");
             }
-            if(e.getSource() == SP.cancelarBtn){
-                controlFormulario(1);
+            if(e.getSource() == SP.cancelarBtn && SP.cancelarBtn.isEnabled()){
+                EDICION = false;
+                controlFormulario("INICIALIZAR-FORMULARIO");
             }
-            if(e.getSource() == SP.guardarBtn){
-                controlFormulario(3);
+            if(e.getSource() == SP.guardarBtn && SP.guardarBtn.isEnabled()){
+                guardarInformacionCampos(EDICION);
+                System.out.println("EDICION: "+EDICION);
+            }
+            
+            if(e.getSource() == SP.editarBtn && SP.editarBtn.isEnabled()){
+                controlFormulario("HABILITAR-EDICION-CAMPOS");
             }
             
             if(e.getSource() == SP.creditoChk){
@@ -478,6 +557,15 @@ public class ControladorSocio{
                     SP.limiteCreditoTxt.setText("0.00");
                     SP.limiteCreditoTxt.setEnabled(false);
                 }
+            }
+            
+            if(e.getSource() == SP.tablaSocioDT){
+                imprimirCodigo();
+            }
+            
+            if(e.getSource() == SP.editarSocio){
+                EDICION = true;
+                controlFormulario("INICIAR-EDICION");
             }
             
         }
@@ -507,6 +595,22 @@ public class ControladorSocio{
             if(e.getSource() == SP.tipoSocioCmb && e.getStateChange() == 2){
                 evaluarTipoSocio();
             }
+        }
+    }
+    
+//    private class EventosTabla implements ListSelectionListener{
+//
+//        @Override
+//        public void valueChanged(ListSelectionEvent e) {
+//            ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+//        }
+//    }
+    
+    private void imprimirCodigo(){
+        int ROW=SP.tablaSocioDT.getSelectedRow();
+        if(ROW!=-1)
+        {
+            IDSOCIO = SP.tablaSocioDT.getValueAt(ROW, 0).toString();
         }
     }
     
